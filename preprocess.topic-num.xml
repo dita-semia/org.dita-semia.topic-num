@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+
+	<target name="dita-semia.preprocess.topic-num">
+
+		<if>
+			<istrue value="${dita-semia.topic-num.activate}"/>
+			<then>
+				<xslt 
+						basedir	= "${dita.temp.dir}" 
+						in		= "${dita.temp.dir}/${user.input.file}" 
+						out		= "${dita.temp.dir}/${user.input.file}.topic-num.tmp" 
+						style	= "${dita.plugin.org.dita-semia.topic-num.dir}/xsl/topicNumMap.xsl">
+					<param name="TRANSTYPE" expression="${transtype}"/>
+					<xmlcatalog refid="dita.catalog"/>
+				</xslt>
+				<!--<copy file="${dita.temp.dir}/${user.input.file}.topic-num.tmp" tofile="${dita.temp.dir}/${user.input.file}" overwrite="yes"/>-->
+				<move file="${dita.temp.dir}/${user.input.file}.topic-num.tmp" tofile="${dita.temp.dir}/${user.input.file}" overwrite="yes"/>
+				
+				<pipeline message="add topic numbers to topic titles" taskname="topic-num">
+					<xslt 
+							basedir	= "${dita.temp.dir}"
+							style	= "${dita.plugin.org.dita-semia.topic-num.dir}/xsl/topicNumTopic.xsl">
+						<param name="ditaMapFile" expression="${dita.temp.dir}/${user.input.file}"/>
+						<includesfile name="${dita.temp.dir}/${fullditatopicfile}"/>
+						<xmlcatalog refid="dita.catalog"/>
+					</xslt>
+				</pipeline>
+			</then>
+			<else>
+				<echo message="skipped (needs to be activated by parameter dita-semia.topic-num.activate)"/>
+			</else>
+		</if>
+		
+		
+	</target>
+
+</project>
