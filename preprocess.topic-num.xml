@@ -6,26 +6,87 @@
 		<if>
 			<istrue value="${dita-semia.topic-num.activate}"/>
 			<then>
+				
+				<if>
+					<not>
+						<isset property="dita-semia.topic-num.xsl"/>
+					</not>
+					<then>
+						<property name="dita-semia.topic-num.xsl" value="${dita.plugin.org.dita-semia.topic-num.dir}/xsl/processMap.xsl"/>
+					</then>
+				</if>
+				<if>
+					<not>
+						<isset property="dita-semia.topic-num.num-delimiter"/>
+					</not>
+					<then>
+						<property name="dita-semia.topic-num.num-delimiter" value=" "/>
+					</then>
+				</if>
+				<if>
+					<not>
+						<isset property="dita-semia.topic-num.tmp-uri-suffix"/>
+					</not>
+					<then>
+						<property name="dita-semia.topic-num.tmp-uri-suffix" value=".topic-num.tmp"/>
+					</then>
+				</if>
+				<if>
+					<not>
+						<isset property="dita-semia.topic-num.chapter-prefix-format"/>
+					</not>
+					<then>
+						<property name="dita-semia.topic-num.chapter-prefix-format" value="Chapter $:"/>
+					</then>
+				</if>
+				<if>
+					<not>
+						<isset property="dita-semia.topic-num.appendix-prefix-format"/>
+					</not>
+					<then>
+						<property name="dita-semia.topic-num.appendix-prefix-format" value="Appendix $:"/>
+					</then>
+				</if>
+				
+				<if>
+					<istrue value="${args.debug}"/>
+					<then>
+						<echo message="Parameters:"/>
+						<echo message="  dita-semia.topic-num.num-delimiterl:         '${dita-semia.topic-num.num-delimiter}'"/>
+						<echo message="  dita-semia.topic-num.chapter-prefix-format:  '${dita-semia.topic-num.chapter-prefix-format}'"/>
+						<echo message="  dita-semia.topic-num.appendix-prefix-format: '${dita-semia.topic-num.appendix-prefix-format}'"/>
+						<echo message="  dita-semia.topic-num.xsl:                    '${dita-semia.topic-num.xsl}'"/>
+						<echo message="  dita-semia.topic-num.tmp-uri-suffix:         '${dita-semia.topic-num.tmp-uri-suffix}'"/>
+						<echo message=""/>
+					</then>
+				</if>
+				
 				<xslt 
 						basedir	= "${dita.temp.dir}" 
 						in		= "${dita.temp.dir}/${user.input.file}" 
-						out		= "${dita.temp.dir}/${user.input.file}.topic-num.tmp" 
-						style	= "${dita.plugin.org.dita-semia.topic-num.dir}/xsl/topicNumMap.xsl">
-					<param name="TRANSTYPE" expression="${transtype}"/>
+						out		= "${dita.temp.dir}/${user.input.file}${dita-semia.topic-num.tmp-uri-suffix}" 
+						style	= "${dita-semia.topic-num.xsl}">
+					<param name="numDelimiter" 			expression="${dita-semia.topic-num.num-delimiter}"/>
+					<param name="tmpUriSuffix" 			expression="${dita-semia.topic-num.tmp-uri-suffix}"/>
+					<param name="chapterPrefixFormat" 	expression="${dita-semia.topic-num.chapter-prefix-format}"/>
+					<param name="appendixPrefixFormat" 	expression="${dita-semia.topic-num.appendix-prefix-format}"/>
 					<xmlcatalog refid="dita.catalog"/>
 				</xslt>
-				<!--<copy file="${dita.temp.dir}/${user.input.file}.topic-num.tmp" tofile="${dita.temp.dir}/${user.input.file}" overwrite="yes"/>-->
 				<move file="${dita.temp.dir}/${user.input.file}.topic-num.tmp" tofile="${dita.temp.dir}/${user.input.file}" overwrite="yes"/>
 				
-				<pipeline message="add topic numbers to topic titles" taskname="topic-num">
-					<xslt 
-							basedir	= "${dita.temp.dir}"
-							style	= "${dita.plugin.org.dita-semia.topic-num.dir}/xsl/topicNumTopic.xsl">
-						<param name="ditaMapFile" expression="${dita.temp.dir}/${user.input.file}"/>
-						<includesfile name="${dita.temp.dir}/${fullditatopicfile}"/>
-						<xmlcatalog refid="dita.catalog"/>
-					</xslt>
-				</pipeline>
+				<loadfile property="topic-list" srcFile="${dita.temp.dir}/${fullditatopicfile}"/>
+				
+				<if>
+					<isset property="topic-list"/>
+					<then>
+						<for list="${topic-list}" delimiter="${line.separator}" param="filename">
+							<sequential>
+								<var name="tmp-filename" value="${dita.temp.dir}/@{filename}${dita-semia.topic-num.tmp-uri-suffix}"/>
+								<move file="${tmp-filename}" tofile="${dita.temp.dir}/@{filename}" overwrite="yes"/>						
+							</sequential>
+						</for>
+					</then>
+				</if>
 			</then>
 			<else>
 				<echo message="skipped (needs to be activated by parameter dita-semia.topic-num.activate)"/>
