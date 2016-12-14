@@ -82,7 +82,12 @@
 						<for list="${topic-list}" delimiter="${line.separator}" param="filename">
 							<sequential>
 								<var name="tmp-filename" value="${dita.temp.dir}/@{filename}${dita-semia.topic-num.tmp-uri-suffix}"/>
-								<move file="${tmp-filename}" tofile="${dita.temp.dir}/@{filename}" overwrite="yes"/>						
+								<if>
+									<available file="${tmp-filename}"/>
+									<then>
+										<move file="${tmp-filename}" tofile="${dita.temp.dir}/@{filename}" overwrite="yes"/>
+									</then>
+								</if>
 							</sequential>
 						</for>
 					</then>
