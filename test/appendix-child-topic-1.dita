@@ -4,7 +4,7 @@
   <title>1st Appendix Child Topic</title>
   <body>
     <p>Text</p>
-		<fig>
+		<fig id="w2q_kvh_3y">
 			<title>Figure</title>
 			<p id="bnv_rxj_gy">figure content</p>
 		</fig>

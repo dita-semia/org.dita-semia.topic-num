@@ -4,6 +4,20 @@
   <title>Frontmatter Topic</title>
   <body>
     <p>Text</p>
+		<section id="vkw_v4h_3y">
+			<title>Cross References</title>
+			<ul id="pwm_w4h_3y">
+				<li id="ngn_y4h_3y"><xref href="chapter-topic-1.dita#topic_ljt_ttj_gy"/></li>
+				<li id="qwm_w4h_3y"><xref href="appendix-topic-1.dita#topic_cwd_y5j_gy"/></li>
+				<li id="zkl_1ph_3y"><xref href="appendix-child-topic-1.dita#topic_ull_wtj_gz"/></li>
+				<li id="n4g_3vh_3y"><xref
+					href="appendix-child-topic-1.dita#topic_ull_wtj_gz/g4v_w4r_gy"/></li>
+				<li id="qyt_lvh_3y"><xref
+					href="appendix-child-topic-1.dita#topic_ull_wtj_gz/w2q_kvh_3y"/></li>
+				<li id="bms_dph_3y"><xref href="appendix-child-topic-1.dita#dy3_ytj_gz"/></li>
+				<li id="zlk_z4h_3y"><xref href="backmatter-topic.dita#topic_p5k_rtj_gy"/></li>
+			</ul>
+		</section>
   </body>
 	<topic id="r25_l5j_gy">
 		<title>Embedded Child Topic</title>
