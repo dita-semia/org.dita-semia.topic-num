@@ -5,8 +5,7 @@
   <body>
     <p>Text</p>
 		<fig>
-			<title>Figure Figure Figure Figure Figure Figure Figure Figure Figure Figure Figure Figure Figure
-				Figure Figure Figure Figure Figure Figure Figure Figure Figure Figure Figure </title>
+			<title>Figure </title>
 			<p id="fqt_xxj_gy">figure content</p>
 		</fig>
 		<table frame="all" rowsep="1" colsep="1" id="znc_1pr_gy">
