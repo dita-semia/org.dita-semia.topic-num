@@ -49,16 +49,34 @@
 						<property name="dita-semia.topic-num.appendix-prefix-format" value="Appendix $:"/>
 					</then>
 				</if>
+				<if>
+					<not>
+						<isset property="dita-semia.topic-num.figure-prefix"/>
+					</not>
+					<then>
+						<property name="dita-semia.topic-num.figure-prefix" value="Figure "/>
+					</then>
+				</if>
+				<if>
+					<not>
+						<isset property="dita-semia.topic-num.appendix-prefix"/>
+					</not>
+					<then>
+						<property name="dita-semia.topic-num.appendix-prefix" value="Table "/>
+					</then>
+				</if>
 				
 				<if>
 					<istrue value="${args.debug}"/>
 					<then>
 						<echo message="Parameters:"/>
-						<echo message="  dita-semia.topic-num.num-delimiterl:         '${dita-semia.topic-num.num-delimiter}'"/>
-						<echo message="  dita-semia.topic-num.chapter-prefix-format:  '${dita-semia.topic-num.chapter-prefix-format}'"/>
-						<echo message="  dita-semia.topic-num.appendix-prefix-format: '${dita-semia.topic-num.appendix-prefix-format}'"/>
-						<echo message="  dita-semia.topic-num.xsl:                    '${dita-semia.topic-num.xsl}'"/>
-						<echo message="  dita-semia.topic-num.tmp-uri-suffix:         '${dita-semia.topic-num.tmp-uri-suffix}'"/>
+						<echo message="  dita-semia.topic-num.num-delimiterl:         	'${dita-semia.topic-num.num-delimiter}'"/>
+						<echo message="  dita-semia.topic-num.chapter-prefix-format:  	'${dita-semia.topic-num.chapter-prefix-format}'"/>
+						<echo message="  dita-semia.topic-num.appendix-prefix-format: 	'${dita-semia.topic-num.appendix-prefix-format}'"/>
+						<echo message="  dita-semia.topic-num.figure-prefix: 			'${dita-semia.topic-num.figure-prefix}'"/>
+						<echo message="  dita-semia.topic-num.table-prefix: 			'${dita-semia.topic-num.table-prefix}'"/>
+						<echo message="  dita-semia.topic-num.xsl:                    	'${dita-semia.topic-num.xsl}'"/>
+						<echo message="  dita-semia.topic-num.tmp-uri-suffix:         	'${dita-semia.topic-num.tmp-uri-suffix}'"/>
 						<echo message=""/>
 					</then>
 				</if>
@@ -72,6 +90,8 @@
 					<param name="tmpUriSuffix" 			expression="${dita-semia.topic-num.tmp-uri-suffix}"/>
 					<param name="chapterPrefixFormat" 	expression="${dita-semia.topic-num.chapter-prefix-format}"/>
 					<param name="appendixPrefixFormat" 	expression="${dita-semia.topic-num.appendix-prefix-format}"/>
+					<param name="figurePrefix" 			expression="${dita-semia.topic-num.figure-prefix}"/>
+					<param name="tablePrefix" 			expression="${dita-semia.topic-num.table-prefix}"/>
 					<xmlcatalog refid="dita.catalog"/>
 				</xslt>
 				<move file="${dita.temp.dir}/${user.input.file}.topic-num.tmp" tofile="${dita.temp.dir}/${user.input.file}" overwrite="yes"/>

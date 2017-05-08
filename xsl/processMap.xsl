@@ -9,10 +9,13 @@
 	<xsl:param name="tmpUriSuffix" 			as="xs:string" select="'.tmp'"/>
 	<xsl:param name="chapterPrefixFormat" 	as="xs:string" select="'Chapter $:'"/>
 	<xsl:param name="appendixPrefixFormat" 	as="xs:string" select="'Appendix $:'"/>
+	<xsl:param name="figurePrefix" 			as="xs:string" select="'Figure '"/>
+	<xsl:param name="tablePrefix" 			as="xs:string" select="'Table '"/>
 
 
 	<xsl:variable name="CLASS_TOPIC"		as="xs:string"	select="' topic/topic '"/>
 	<xsl:variable name="CLASS_LINK"			as="xs:string"	select="' topic/link '"/>
+	<xsl:variable name="CLASS_XREF"			as="xs:string"	select="' topic/xref '"/>
 	<xsl:variable name="CLASS_FIG"			as="xs:string"	select="' topic/fig '"/>
 	<xsl:variable name="CLASS_TABLE"		as="xs:string"	select="' topic/table '"/>
 	<xsl:variable name="CLASS_TITLE"		as="xs:string"	select="' topic/title '"/>
@@ -26,12 +29,14 @@
 	
 	
 	<xsl:include href="collectCounts.xsl"/>
+	<xsl:include href="getNumRootNode.xsl"/>
 	<xsl:include href="getTopicTitlePrefix.xsl"/>
 	<xsl:include href="processTopic.xsl"/>
 	
 	
 	<xsl:key name="map-id" 		match="*[topicmeta/@resourceid]" 						use="topicmeta/@resourceid"/>
 	<xsl:key name="map-uri" 	match="*[contains(@class, ' map/topicref ')][@href]" 	use="resolve-uri(@href, base-uri(.))"/>
+	<xsl:key name="id" 			match="*[@id]"												use="@id"/>
 	
 	<xsl:key name="enumerableByClass" 
 		match	= "*[contains(@class, ' topic/fig ')][*[contains(@class, ' topic/title ')]] | *[contains(@class, ' topic/table ')][*[contains(@class, ' topic/title ')]]"
@@ -63,57 +68,19 @@
 		<!-- remove -->
 	</xsl:template>
 	
-	
-	<xsl:template match="*[contains(@class, $CLASS_FRONTMATTER)]" priority="2">
-		<xsl:next-match>
-			<xsl:with-param name="rootClass" 	select="$CLASS_FRONTMATTER" tunnel="yes"/>
-			<xsl:with-param name="numRootNode" 	select="." 					tunnel="yes"/>
-		</xsl:next-match>
-	</xsl:template>
-	
-	<xsl:template match="*[contains(@class, $CLASS_CHAPTER)]" priority="2">
-		<xsl:next-match>
-			<xsl:with-param name="rootClass"	select="$CLASS_CHAPTER" tunnel="yes"/>
-			<xsl:with-param name="numRootNode" 	select="." 				tunnel="yes"/>
-			<xsl:with-param name="rootNum" as="xs:integer" tunnel="yes">
-				<xsl:apply-templates select="." mode="GetTopicNum"/>
-			</xsl:with-param>
-		</xsl:next-match>
-	</xsl:template>
-	
-	<xsl:template match="*[contains(@class, $CLASS_APPENDIX)]" priority="2">
-		<xsl:next-match>
-			<xsl:with-param name="rootClass" 	select="$CLASS_APPENDIX" 	tunnel="yes"/>
-			<xsl:with-param name="numRootNode" 	select="." 					tunnel="yes"/>
-			<xsl:with-param name="rootNum" as="xs:integer" tunnel="yes">
-				<xsl:apply-templates select="." mode="GetTopicNum"/>
-			</xsl:with-param>
-		</xsl:next-match>
-	</xsl:template>
-	
-	<xsl:template match="*[contains(@class, $CLASS_BACKMATTER)]" priority="2">
-		<xsl:next-match>
-			<xsl:with-param name="rootClass" 	select="$CLASS_BACKMATTER" 	tunnel="yes"/>
-			<xsl:with-param name="numRootNode"	select="." 					tunnel="yes"/>
-		</xsl:next-match>
-	</xsl:template>
-	
-	
 	<xsl:template match="*[contains(@class, $CLASS_TOPICREF)][string(@href) != '']">
 		<xsl:param name="rootMap"		as="document-node()" 	tunnel="yes"/>
-		<xsl:param name="numRootNode"	as="node()?" 			tunnel="yes" select="$rootMap"/>
+		
+		<xsl:variable name="numRootNode"	as="node()?">
+			<xsl:apply-templates select="." mode="GetNumRootNode"/>
+		</xsl:variable>
 		
 		<xsl:variable name="refUri" as="xs:anyURI" 			select="resolve-uri(@href, base-uri(.))"/>
 		<xsl:variable name="refDoc"	as="document-node()?"	select="if (doc-available($refUri)) then doc($refUri) else ()"/>
 		<xsl:if test="exists($refDoc)">
 			<xsl:message>processing topic <xsl:value-of select="$refUri"/></xsl:message>
 			<xsl:result-document href="{$refUri}{$tmpUriSuffix}" method="xml" indent="no">
-				<xsl:variable name="numNodes" as="element()*" select="(preceding::* | ancestor::*) intersect $numRootNode/descendant-or-self::*"/>
-				<!--<xsl:message select="xs:integer(sum($numNodes/@ds:figCount))"/>-->
-				<xsl:apply-templates select="$refDoc" mode="ProcessTopic">
-					<xsl:with-param name="figCount" 	select="xs:integer(sum($numNodes/@ds:figCount))" 	tunnel="yes"/>
-					<xsl:with-param name="tableCount"	select="xs:integer(sum($numNodes/@ds:tableCount))" 	tunnel="yes"/>
-				</xsl:apply-templates>
+				<xsl:apply-templates select="$refDoc" mode="ProcessTopic"/>
 			</xsl:result-document>
 		</xsl:if>
 		

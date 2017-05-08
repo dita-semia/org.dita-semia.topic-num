@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<topic id="topic_kxf_vtj_gy" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<topic id="topic_kz2_sfk_gy" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="urn:oasis:names:tc:dita:xsd:topic.xsd">
-	<title>2nd Chapter Topic</title>
+	<title>1st Map Grandchild Topic</title>
 	<body>
 		<p>Text</p>
-		<fig id="ikq_1pr_gz">
+		<fig>
 			<title>Figure</title>
-			<p id="itz_xxj_gy">figure content</p>
+			<p id="wwl_xrr_gy">figure content</p>
 		</fig>
-		<table frame="all" rowsep="1" colsep="1" id="ikq_1pr_gy">
+		<table frame="all" rowsep="1" colsep="1" id="xwl_xrr_gy">
 			<title>Table</title>
 			<tgroup cols="2">
 				<colspec colname="c1" colnum="1" colwidth="1.0*"/>

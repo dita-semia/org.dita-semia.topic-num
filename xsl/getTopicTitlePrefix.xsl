@@ -8,8 +8,13 @@
 	
 	<!-- mode: GetTopicTitlePrefix -->
 	
-	<xsl:template match="*" mode="GetTopicTitlePrefix" as="xs:string?">
-		<xsl:param name="rootClass" as="xs:string?" tunnel="yes"/>
+	<xsl:template match="*" mode="GetTopicTitlePrefix" as="node()?">
+		
+		<xsl:variable name="numRootNode" as="element()?">
+			<xsl:apply-templates select="." mode="GetNumRootNode"/>
+		</xsl:variable>
+		<xsl:variable name="numRootClass" as="xs:string?" select="$numRootNode/@class"/>
+		<!--<xsl:message>numRootClass(<xsl:value-of select="name(.)"/>): <xsl:value-of select="$numRootClass"/></xsl:message>-->
 			
 		<xsl:variable name="numLst" as="xs:integer*">
 			<xsl:apply-templates select="." mode="GetTopicNum"/>
@@ -17,18 +22,18 @@
 		
 		<xsl:variable name="numStr" as="xs:string?">
 			<xsl:choose>
-				<xsl:when test="$rootClass = $CLASS_FRONTMATTER"/>
-				<xsl:when test="$rootClass = $CLASS_BACKMATTER"/>
-				<xsl:when test="($rootClass = $CLASS_APPENDIX) and (count($numLst) = 1) and ($appendixPrefixFormat != '')">
+				<xsl:when test="contains($numRootClass, $CLASS_FRONTMATTER)"/>
+				<xsl:when test="contains($numRootClass, $CLASS_BACKMATTER)"/>
+				<xsl:when test="contains($numRootClass, $CLASS_APPENDIX) and (count($numLst) = 1) and ($appendixPrefixFormat != '')">
 					<xsl:variable name="num" as="xs:string?">
-						<xsl:number value="$numLst" format="A.1"/>
+						<xsl:number value="$numLst" format="A"/>
 					</xsl:variable>
 					<xsl:sequence select="replace($appendixPrefixFormat, '\$', $num)"/>
 				</xsl:when>
-				<xsl:when test="$rootClass = $CLASS_APPENDIX">
+				<xsl:when test="contains($numRootClass, $CLASS_APPENDIX)">
 					<xsl:number value="$numLst" format="A.1"/>
 				</xsl:when>
-				<xsl:when test="($rootClass = $CLASS_CHAPTER) and (count($numLst) = 1) and ($chapterPrefixFormat != '')">
+				<xsl:when test="contains($numRootClass, $CLASS_CHAPTER) and (count($numLst) = 1) and ($chapterPrefixFormat != '')">
 					<xsl:variable name="num" as="xs:string?">
 						<xsl:number value="$numLst" format="1.1"/>
 					</xsl:variable>
@@ -84,11 +89,13 @@
 	
 	<!-- utility functions -->
 	
-	<xsl:function name="ds:getNumPrefix" as="xs:string?">
+	<xsl:function name="ds:getNumPrefix" as="node()?">
 		<xsl:param name="num" as="xs:string?"/>
 		
 		<xsl:if test="string($num)!= ''">
-			<xsl:sequence select="concat($num, $numDelimiter)"/>
+			<num-prefix class="+ topic/ph ds-d/num-prefix ">
+				<xsl:sequence select="concat($num, $numDelimiter)"/>
+			</num-prefix>
 		</xsl:if>
 	</xsl:function>
 

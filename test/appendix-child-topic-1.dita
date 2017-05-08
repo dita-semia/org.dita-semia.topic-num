@@ -41,8 +41,8 @@
 	<topic id="f4h_xtj_gz">
 		<title>2nd Embedded Topic</title>
 		<body>
-			<p id="byc_ytj_gz">Text</p>
-			<fig>
+			<p>Text</p>
+			<fig id="byc_ytj_gz">
 				<title>Figure</title>
 				<p id="tb2_5xj_gy">figure content</p>
 			</fig>
