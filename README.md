@@ -16,7 +16,7 @@ Since after installation the step will be executed for every(!) transtype the fe
 	Topics within appendices are numbered in the format "A.1.1".
 
 
-- **Add number to titles for figures and titles**
+- **Add prefix and number to titles for figures and titles**
 
 	Elements within chapters are numbered in the format "1-1".
 	
@@ -62,6 +62,24 @@ Since after installation the step will be executed for every(!) transtype the fe
 	Set it to "" or "$" to disable this feature.
 
 	Default: "Appendix $: " 
+
+  
+- **dita-semia.topic-num.figure-prefix-format**
+
+	Prefix to be added in front of a figure title. A "$" will be replaced by the number.
+	
+	Set it to "" or "$" to disable this feature.
+
+	Default: "Figure $: " 
+
+  
+- **dita-semia.topic-num.table-prefix-format**
+
+	Prefix to be added in front of a table title . A "$" will be replaced by the number.
+	
+	Set it to "" or "$" to disable this feature.
+
+	Default: "Table $: " 
   
   
 - **dita-semia.topic-num.xsl**
