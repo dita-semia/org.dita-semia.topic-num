@@ -5,11 +5,11 @@
   <body>
     <p>Text</p>
 		<fig>
-			<title>Figure</title>
+			<title>Figure-Title</title>
 			<p id="wwl_xrr_gy">figure content</p>
 		</fig>
 		<table frame="all" rowsep="1" colsep="1" id="xwl_xrr_gy">
-			<title>Table</title>
+			<title>Table-Title</title>
 			<tgroup cols="2">
 				<colspec colname="c1" colnum="1" colwidth="1.0*"/>
 				<colspec colname="c2" colnum="2" colwidth="1.0*"/>

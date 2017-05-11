@@ -5,11 +5,11 @@
   <body>
     <p>Text</p>
 		<fig>
-			<title>Figure</title>
+			<title>Figure-Title</title>
 			<p id="oz1_xxj_gy">figure content</p>
 		</fig>
 		<table frame="all" rowsep="1" colsep="1" id="flw_y4r_gy">
-			<title>Table</title>
+			<title>Table-Title</title>
 			<tgroup cols="2">
 				<colspec colname="c1" colnum="1" colwidth="1.0*"/>
 				<colspec colname="c2" colnum="2" colwidth="1.0*"/>
@@ -43,11 +43,11 @@
 		<body>
 			<p id="byc_ytj_gy">Text</p>
 			<fig>
-				<title>Figure</title>
+				<title>Figure-Title</title>
 				<p id="kqf_xxj_gy">figure content</p>
 			</fig>
 			<table frame="all" rowsep="1" colsep="1" id="zk1_z4r_gy">
-				<title>Table</title>
+				<title>Table-Title</title>
 				<tgroup cols="2">
 					<colspec colname="c1" colnum="1" colwidth="1.0*"/>
 					<colspec colname="c2" colnum="2" colwidth="1.0*"/>
