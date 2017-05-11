@@ -143,32 +143,38 @@
 				<xsl:when test="$keyClass = 'topic/table'">
 					<xsl:sequence select="xs:integer(sum($numNodes/@ds:tableCount))"/>
 				</xsl:when>
+				<xsl:otherwise>
+					<xsl:sequence select="0"/>
+				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
 		<xsl:variable name="localNum" 	as="xs:integer" 	select="count(key('enumerableByClass', $keyClass, $node/ancestor::document-node())[. &lt;&lt; $node])"/>
-		<xsl:variable name="num" 		as="xs:integer" 	select="$precCount + $localNum"/>
+		<xsl:variable name="fullNum" 	as="xs:integer" 	select="$precCount + $localNum"/>
 
 		<xsl:variable name="numStr" as="xs:string*">
-			<xsl:value-of select="if ($keyClass = 'topic/fig') then $figurePrefix else $tablePrefix"/>
-			<xsl:choose>
-				<xsl:when test="contains($numRootClass, $CLASS_FRONTMATTER)"/>
-				<xsl:when test="contains($numRootClass, $CLASS_BACKMATTER)"/>
-				<xsl:when test="contains($numRootClass, $CLASS_APPENDIX)">
-					<xsl:variable name="rootNum" as="xs:integer">
-						<xsl:apply-templates select="$numRootNode" mode="GetTopicNum"/>
-					</xsl:variable>
-					<xsl:number value="($rootNum, $num)" format="A-1"/>
-				</xsl:when>
-				<xsl:when test="contains($numRootClass, $CLASS_CHAPTER)">
-					<xsl:variable name="rootNum" as="xs:integer">
-						<xsl:apply-templates select="$numRootNode" mode="GetTopicNum"/>
-					</xsl:variable>
-					<xsl:number value="($rootNum, $num)" format="1-1"/>
-				</xsl:when>
-				<xsl:otherwise>
-					<xsl:number value="$num" format="1"/>
-				</xsl:otherwise>
-			</xsl:choose>
+			<xsl:variable name="prefixFormat" as="xs:string" select="if ($keyClass = 'topic/fig') then $figurePrefix else $tablePrefix"/>
+			<xsl:variable name="num" as="xs:string?">
+				<xsl:choose>
+					<xsl:when test="contains($numRootClass, $CLASS_FRONTMATTER)"/>
+					<xsl:when test="contains($numRootClass, $CLASS_BACKMATTER)"/>
+					<xsl:when test="contains($numRootClass, $CLASS_APPENDIX)">
+						<xsl:variable name="rootNum" as="xs:integer">
+							<xsl:apply-templates select="$numRootNode" mode="GetTopicNum"/>
+						</xsl:variable>
+						<xsl:number value="($rootNum, $fullNum)" format="A-1"/>
+					</xsl:when>
+					<xsl:when test="contains($numRootClass, $CLASS_CHAPTER)">
+						<xsl:variable name="rootNum" as="xs:integer">
+							<xsl:apply-templates select="$numRootNode" mode="GetTopicNum"/>
+						</xsl:variable>
+						<xsl:number value="($rootNum, $fullNum)" format="1-1"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:number value="$fullNum" format="1"/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:variable>
+			<xsl:sequence select="replace($prefixFormat, '\$', $num)"/>
 		</xsl:variable>
 		
 		<!--<xsl:message select="$numRootClass"/>
