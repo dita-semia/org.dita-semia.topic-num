@@ -35,7 +35,7 @@
 				</xsl:when>
 				<xsl:when test="contains($numRootClass, $CLASS_CHAPTER) and (count($numLst) = 1) and ($chapterPrefixFormat != '')">
 					<xsl:variable name="num" as="xs:string?">
-						<xsl:number value="$numLst" format="1.1"/>
+						<xsl:number value="$numLst" format="1"/>
 					</xsl:variable>
 					<xsl:sequence select="replace($chapterPrefixFormat, '\$', $num)"/>
 				</xsl:when>
