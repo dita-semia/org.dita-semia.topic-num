@@ -5,6 +5,11 @@ It's meant to be used for HTML-based output formats since in these transformatio
 
 Since after installation the step will be executed for every(!) transtype the feature has to activated explicitly by setting the parameter dita-semia.topic-num.activate to true.
 
+Also note that your transformation type might already have its own implementation for adding a prefix to figure and table titles.
+For standard xhtml output this will result in titles like "Table 1. Table 1-1: Table-Title". To fix this you will have to modify the final transformation stage 
+to no more add additional prefixes. For demonstration purpose the file xsl/xhtml/dita2xhtml.xsl includes templates that will do exactly this for the standard xhtml transformation.
+
+
 ## Features:
 
 - **Add number to titles for topics**
@@ -93,3 +98,4 @@ Since after installation the step will be executed for every(!) transtype the fe
 	Suffix that is added to the filenames for generating temporal files.
 
 	Default: ".topic-num.tmp"
+
