@@ -54,15 +54,15 @@
 						<isset property="dita-semia.topic-num.figure-prefix"/>
 					</not>
 					<then>
-						<property name="dita-semia.topic-num.figure-prefix" value="Figure "/>
+						<property name="dita-semia.topic-num.figure-prefix" value="Figure $: "/>
 					</then>
 				</if>
 				<if>
 					<not>
-						<isset property="dita-semia.topic-num.appendix-prefix"/>
+						<isset property="dita-semia.topic-num.table-prefix"/>
 					</not>
 					<then>
-						<property name="dita-semia.topic-num.appendix-prefix" value="Table "/>
+						<property name="dita-semia.topic-num.table-prefix" value="Table $: "/>
 					</then>
 				</if>
 				
