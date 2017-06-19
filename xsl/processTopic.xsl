@@ -127,21 +127,24 @@
 	<xsl:template name="GetNumerableTitlePrefix" as="node()?">
 		<xsl:param name="node"			as="element()?"	select="."/>
 		<xsl:param name="keyClass" 		as="xs:string"/>
+		<xsl:param name="rootMap"		as="document-node()" 	tunnel="yes"/>
 		
 		
-		<xsl:variable name="numRootNode" as="element()?">
+		<xsl:variable name="numRootNodeInMap" as="element()?">
 			<xsl:apply-templates select="$node" mode="GetNumRootNode"/>
 		</xsl:variable>
-		<xsl:variable name="numRootClass" as="xs:string?" select="$numRootNode/@class"/>
+		<xsl:variable name="numRootClass" 	as="xs:string?" select="$numRootNodeInMap/@class"/>
+		<xsl:variable name="topicInMap"		as="element()?"	select="key('map-uri', base-uri(.), $rootMap)[1]"/>
 
 		<xsl:variable name="precCount" 	as="xs:integer">
-			<xsl:variable name="numNodes" as="element()*" select="($node/preceding::* | $node/ancestor::*) intersect $numRootNode/descendant-or-self::*"/>
+			<xsl:variable name="numNodesInMap" as="element()*" select="($topicInMap/preceding::* | $topicInMap/ancestor::*) intersect $numRootNodeInMap/descendant-or-self::*"/>
+
 			<xsl:choose>
 				<xsl:when test="$keyClass = 'topic/fig'">
-					<xsl:sequence select="xs:integer(sum($numNodes/@ds:figCount))"/>
+					<xsl:sequence select="xs:integer(sum($numNodesInMap/@ds:figCount))"/>
 				</xsl:when>
 				<xsl:when test="$keyClass = 'topic/table'">
-					<xsl:sequence select="xs:integer(sum($numNodes/@ds:tableCount))"/>
+					<xsl:sequence select="xs:integer(sum($numNodesInMap/@ds:tableCount))"/>
 				</xsl:when>
 				<xsl:otherwise>
 					<xsl:sequence select="0"/>
@@ -159,13 +162,13 @@
 					<xsl:when test="contains($numRootClass, $CLASS_BACKMATTER)"/>
 					<xsl:when test="contains($numRootClass, $CLASS_APPENDIX)">
 						<xsl:variable name="rootNum" as="xs:integer">
-							<xsl:apply-templates select="$numRootNode" mode="GetTopicNum"/>
+							<xsl:apply-templates select="$numRootNodeInMap" mode="GetTopicNum"/>
 						</xsl:variable>
 						<xsl:number value="($rootNum, $fullNum)" format="A-1"/>
 					</xsl:when>
 					<xsl:when test="contains($numRootClass, $CLASS_CHAPTER)">
 						<xsl:variable name="rootNum" as="xs:integer">
-							<xsl:apply-templates select="$numRootNode" mode="GetTopicNum"/>
+							<xsl:apply-templates select="$numRootNodeInMap" mode="GetTopicNum"/>
 						</xsl:variable>
 						<xsl:number value="($rootNum, $fullNum)" format="1-1"/>
 					</xsl:when>
