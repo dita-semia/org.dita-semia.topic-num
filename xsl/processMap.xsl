@@ -69,7 +69,6 @@
 	</xsl:template>
 	
 	<xsl:template match="*[contains(@class, $CLASS_TOPICREF)][string(@href) != '']">
-		<xsl:param name="rootMap"		as="document-node()" 	tunnel="yes"/>
 		
 		<xsl:variable name="numRootNode"	as="node()?">
 			<xsl:apply-templates select="." mode="GetNumRootNode"/>
