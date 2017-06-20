@@ -16,8 +16,9 @@
 		<xsl:variable name="refUri" as="xs:anyURI" 			select="resolve-uri(@href, base-uri(.))"/>
 		<xsl:variable name="refDoc"	as="document-node()?"	select="if (doc-available($refUri)) then doc($refUri) else ()"/>
 		<xsl:copy>
-			<xsl:attribute name="ds:figCount" 	select="count(key('enumerableByClass', 'topic/fig', 	$refDoc))"/>
-			<xsl:attribute name="ds:tableCount" select="count(key('enumerableByClass', 'topic/table', 	$refDoc))"/>
+			<xsl:attribute name="ds:figCount" 		select="count(key('enumerableByClass', $CS_FIG, 			$refDoc))"/>
+			<xsl:attribute name="ds:tableCount" 	select="count(key('enumerableByClass', $CS_TABLE, 			$refDoc))"/>
+			<xsl:attribute name="ds:equationCount" 	select="count(key('enumerableByClass', $CS_EQUATION_BLOCK, 	$refDoc))"/>
 			<xsl:apply-templates select="attribute() | node()" mode="#current"/>
 		</xsl:copy>
 	</xsl:template>

@@ -31,6 +31,25 @@
 				</tbody>
 			</tgroup>
 		</table>
+		<equation-block id="xtl_25j_gy"><equation-inline><mathml>
+			<m:math xmlns:m="http://www.w3.org/1998/Math/MathML">
+				<m:mrow>
+					<m:mi>e</m:mi>
+					<m:mo>=</m:mo>
+					<m:mi>m</m:mi>
+					<m:mo>&#xB7;</m:mo>
+					<m:msup>
+						<m:mrow>
+							<m:mi>c</m:mi>
+						</m:mrow>
+						<m:mrow>
+							<m:mn>2</m:mn>
+						</m:mrow>
+					</m:msup>
+				</m:mrow>
+			</m:math>
+			</mathml></equation-inline><equation-number id="equation-number_pry_ghc_wz"
+			>Equation-Number</equation-number></equation-block>
 	</body>
 	<topic id="htl_25j_gy">
 		<title>1st Embedded Topic</title>
@@ -69,6 +88,25 @@
 					</tbody>
 				</tgroup>
 			</table>
+			<equation-block id="ytl_25j_gy"><equation-inline><mathml>
+				<m:math xmlns:m="http://www.w3.org/1998/Math/MathML">
+					<m:mrow>
+						<m:mi>e</m:mi>
+						<m:mo>=</m:mo>
+						<m:mi>m</m:mi>
+						<m:mo>&#xB7;</m:mo>
+						<m:msup>
+							<m:mrow>
+								<m:mi>c</m:mi>
+							</m:mrow>
+							<m:mrow>
+								<m:mn>2</m:mn>
+							</m:mrow>
+						</m:msup>
+					</m:mrow>
+				</m:math>
+				</mathml></equation-inline><equation-number id="equation-number_yry_ghc_wz"
+				>Equation-Number</equation-number></equation-block>
 		</body>
 	</topic>
 </topic>

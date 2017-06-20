@@ -5,28 +5,35 @@
 	xmlns:ds	= "http://www.dita-semia.org"
 	exclude-result-prefixes="#all">
 
-	<xsl:param name="numDelimiter" 			as="xs:string" select="' '"/>
-	<xsl:param name="tmpUriSuffix" 			as="xs:string" select="'.tmp'"/>
-	<xsl:param name="chapterPrefixFormat" 	as="xs:string" select="'Chapter $:'"/>
-	<xsl:param name="appendixPrefixFormat" 	as="xs:string" select="'Appendix $:'"/>
-	<xsl:param name="figurePrefix" 			as="xs:string" select="'Figure '"/>
-	<xsl:param name="tablePrefix" 			as="xs:string" select="'Table '"/>
+	<xsl:param name="numDelimiter" 				as="xs:string" select="' '"/>
+	<xsl:param name="tmpUriSuffix" 				as="xs:string" select="'.tmp'"/>
+	<xsl:param name="chapterPrefixFormat" 		as="xs:string" select="'Chapter $:'"/>
+	<xsl:param name="appendixPrefixFormat" 		as="xs:string" select="'Appendix $:'"/>
+	<xsl:param name="figurePrefix" 				as="xs:string" select="'Figure $:'"/>
+	<xsl:param name="tablePrefix" 				as="xs:string" select="'Table $:'"/>
+	<xsl:param name="equationPrefix" 			as="xs:string" select="'Equation $: '"/>
 
 
-	<xsl:variable name="CLASS_TOPIC"		as="xs:string"	select="' topic/topic '"/>
-	<xsl:variable name="CLASS_LINK"			as="xs:string"	select="' topic/link '"/>
-	<xsl:variable name="CLASS_XREF"			as="xs:string"	select="' topic/xref '"/>
-	<xsl:variable name="CLASS_FIG"			as="xs:string"	select="' topic/fig '"/>
-	<xsl:variable name="CLASS_TABLE"		as="xs:string"	select="' topic/table '"/>
-	<xsl:variable name="CLASS_TITLE"		as="xs:string"	select="' topic/title '"/>
+	<xsl:variable name="CLASS_TOPIC"			as="xs:string"	select="' topic/topic '"/>
+	<xsl:variable name="CLASS_LINK"				as="xs:string"	select="' topic/link '"/>
+	<xsl:variable name="CLASS_XREF"				as="xs:string"	select="' topic/xref '"/>
+	<xsl:variable name="CLASS_FIG"				as="xs:string"	select="' topic/fig '"/>
+	<xsl:variable name="CLASS_TABLE"			as="xs:string"	select="' topic/table '"/>
+	<xsl:variable name="CLASS_TITLE"			as="xs:string"	select="' topic/title '"/>
+	<xsl:variable name="CLASS_EQUATION_BLOCK" 	as="xs:string" 	select="' equation-d/equation-block '"/>
+	<xsl:variable name="CLASS_EQUATION_NUMBER" 	as="xs:string" 	select="' equation-d/equation-number '"/>
 	
-	<xsl:variable name="CLASS_TOPICREF"		as="xs:string"	select="' map/topicref '"/>
+	<xsl:variable name="CLASS_TOPICREF"			as="xs:string"	select="' map/topicref '"/>
 	
-	<xsl:variable name="CLASS_FRONTMATTER"	as="xs:string"	select="' bookmap/frontmatter '"/>
-	<xsl:variable name="CLASS_CHAPTER"		as="xs:string"	select="' bookmap/chapter '"/>
-	<xsl:variable name="CLASS_APPENDIX"		as="xs:string"	select="' bookmap/appendix '"/>
-	<xsl:variable name="CLASS_BACKMATTER"	as="xs:string"	select="' bookmap/backmatter '"/>
+	<xsl:variable name="CLASS_FRONTMATTER"		as="xs:string"	select="' bookmap/frontmatter '"/>
+	<xsl:variable name="CLASS_CHAPTER"			as="xs:string"	select="' bookmap/chapter '"/>
+	<xsl:variable name="CLASS_APPENDIX"			as="xs:string"	select="' bookmap/appendix '"/>
+	<xsl:variable name="CLASS_BACKMATTER"		as="xs:string"	select="' bookmap/backmatter '"/>
 	
+	
+	<xsl:variable name="CS_FIG"					as="xs:string"	select="'topic/fig'"/>
+	<xsl:variable name="CS_TABLE"				as="xs:string"	select="'topic/table'"/>
+	<xsl:variable name="CS_EQUATION_BLOCK" 		as="xs:string" 	select="'equation-d/equation-block'"/>
 	
 	<xsl:include href="collectCounts.xsl"/>
 	<xsl:include href="getNumRootNode.xsl"/>
@@ -39,7 +46,9 @@
 	<xsl:key name="id" 			match="*[@id]"												use="@id"/>
 	
 	<xsl:key name="enumerableByClass" 
-		match	= "*[contains(@class, ' topic/fig ')][*[contains(@class, ' topic/title ')]] | *[contains(@class, ' topic/table ')][*[contains(@class, ' topic/title ')]]"
+		match	= "*[contains(@class, $CLASS_FIG)][*[contains(@class, $CLASS_TITLE)]] | 
+					*[contains(@class, $CLASS_TABLE)][*[contains(@class, $CLASS_TITLE)]] | 
+					*[contains(@class, $CLASS_EQUATION_BLOCK)][*[contains(@class, $CLASS_EQUATION_NUMBER)]]"
 		use		= "tokenize(@class, ' ')"/>
 
 

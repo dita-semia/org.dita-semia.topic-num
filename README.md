@@ -7,7 +7,7 @@ Since after installation the step will be executed for every(!) transtype the fe
 
 Also note that your transformation type might already have its own implementation for adding a prefix to figure and table titles.
 For standard xhtml output this will result in titles like "Table 1. Table 1-1: Table-Title". To fix this you will have to modify the final transformation stage 
-to no more add additional prefixes. For demonstration purpose the file xsl/xhtml/dita2xhtml.xsl includes templates that will do exactly this for the standard xhtml transformation.
+to no more add additional prefixes. For demonstration purpose the file xsl/xhtml/dita2xhtml.xsl includes templates that will do exactly this for the standard xhtml transformation. (Set the ant property args.xsl to <DITA-OT dir>/plugins/org.dita-semia.topic-num/xsl/xhtml/dita2xhtml.xsl to use it.)
 
 
 ## Features:
@@ -21,7 +21,7 @@ to no more add additional prefixes. For demonstration purpose the file xsl/xhtml
 	Topics within appendices are numbered in the format "A.1.1".
 
 
-- **Add prefix and number to titles for figures and titles**
+- **Add prefix and number to titles for figures and tables and numbers for equation blocks**
 
 	Elements within chapters are numbered in the format "1-1".
 	
@@ -30,6 +30,10 @@ to no more add additional prefixes. For demonstration purpose the file xsl/xhtml
 	Elements outside a bookmap are numbered in the format "1".
 	
 	The numbering beyond chapter or appendix level is consecutive, ignoring the topic hierarchy.
+	
+	The number will be added to corssreferences to these elements as well.
+	
+	For crossreferences to equation blocks the content of the equation number will be added as well if it is not already present. (Right now DITA-IT does not do this.)
 	
 	
 - **Add a prefix to chapter and appendix titles**
@@ -85,6 +89,15 @@ to no more add additional prefixes. For demonstration purpose the file xsl/xhtml
 	Set it to "" or "$" to disable this feature.
 
 	Default: "Table $: " 
+
+  
+- **dita-semia.topic-num.equation-prefix-format**
+
+	Prefix to be added in front of a equation-number . A "$" will be replaced by the number.
+	
+	Set it to "" or "$" to disable this feature.
+
+	Default: "Equation $: " 
   
   
 - **dita-semia.topic-num.xsl**

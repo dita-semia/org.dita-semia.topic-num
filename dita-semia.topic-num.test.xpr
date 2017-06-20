@@ -14,21 +14,6 @@
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
-                                        <String>DITA Map PDF with topic numbers</String>
-                                    </list>
-                                </field>
-                                <field name="scenarioTypes">
-                                    <list>
-                                        <String>DITAMAP</String>
-                                    </list>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="url">
-                                    <String>test/out/xhtml/appendix-topic-2.html</String>
-                                </field>
-                                <field name="scenarioIds">
-                                    <list>
                                         <String>DITA Map XHTML with topic numbers</String>
                                     </list>
                                 </field>
@@ -45,6 +30,21 @@
                                 <field name="scenarioIds">
                                     <list>
                                         <String>DITA Map PDF with topic numbers</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>DITAMAP</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>test/out/xhtml/appendix-topic-2.html</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>DITA Map XHTML with topic numbers</String>
                                     </list>
                                 </field>
                                 <field name="scenarioTypes">

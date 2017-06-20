@@ -54,14 +54,26 @@
 			<xsl:when test="contains($refNode/@class, $CLASS_FIG)">
 				<xsl:call-template name="GetNumerableTitlePrefix">
 					<xsl:with-param name="node"		select="$refNode/*[contains(@class, ' topic/title ')]"/>
-					<xsl:with-param name="keyClass" select="'topic/fig'"/>	<!-- don't use $CLASS_FIG here since it has spaces -->
+					<xsl:with-param name="keyClass" select="$CS_FIG"/>
 				</xsl:call-template>
 			</xsl:when>
 			<xsl:when test="contains($refNode/@class, $CLASS_TABLE)">
 				<xsl:call-template name="GetNumerableTitlePrefix">
 					<xsl:with-param name="node"		select="$refNode/*[contains(@class, ' topic/title ')]"/>
-					<xsl:with-param name="keyClass" select="'topic/table'"/>	<!-- don't use $CLASS_TABLE here since it has spaces -->
+					<xsl:with-param name="keyClass" select="$CS_TABLE"/>
 				</xsl:call-template>
+			</xsl:when>
+			<xsl:when test="contains($refNode/@class, $CLASS_EQUATION_BLOCK)">
+				<xsl:call-template name="GetNumerableTitlePrefix">
+					<xsl:with-param name="node" 	select="$refNode/*[contains(@class, ' equation-d/equation-number ')]"/>
+					<xsl:with-param name="keyClass" select="$CS_EQUATION_BLOCK"/>
+				</xsl:call-template>
+				<xsl:variable name="equationNumber" 		as="xs:string" select="string($refNode/*[contains(@class, ' equation-d/equation-number ')])"/>
+				<xsl:if test="exists($equationNumber != '') and empty(parent::*/text())">
+					<!-- add content of equation-number as well since DITA-OT didn't add it to the link. -->
+					<xsl:value-of select="$equationNumber"/>
+				</xsl:if>
+				
 			</xsl:when>
 		</xsl:choose>
 		
@@ -122,6 +134,18 @@
 		</xsl:copy>
 	</xsl:template>
 	
+	<xsl:template match="*[contains(@class, $CLASS_EQUATION_BLOCK)]/*[contains(@class, $CLASS_EQUATION_NUMBER)]" mode="ProcessTopic">
+		<xsl:copy>
+			<xsl:apply-templates select="attribute()" mode="#current"/>
+			
+			<xsl:call-template name="GetNumerableTitlePrefix">
+				<xsl:with-param name="keyClass" select="'equation-d/equation-block'"/> <!-- don't use $CLASS_EQUATION here since it has spaces -->
+			</xsl:call-template>
+			
+			<xsl:apply-templates select="node()" mode="#current"/>
+		</xsl:copy>
+	</xsl:template>
+	
 	
 	
 	<xsl:template name="GetNumerableTitlePrefix" as="node()?">
@@ -140,11 +164,14 @@
 			<xsl:variable name="numNodesInMap" as="element()*" select="($topicInMap/preceding::* | $topicInMap/ancestor::*) intersect $numRootNodeInMap/descendant-or-self::*"/>
 
 			<xsl:choose>
-				<xsl:when test="$keyClass = 'topic/fig'">
+				<xsl:when test="$keyClass = $CS_FIG">
 					<xsl:sequence select="xs:integer(sum($numNodesInMap/@ds:figCount))"/>
 				</xsl:when>
-				<xsl:when test="$keyClass = 'topic/table'">
+				<xsl:when test="$keyClass = $CS_TABLE">
 					<xsl:sequence select="xs:integer(sum($numNodesInMap/@ds:tableCount))"/>
+				</xsl:when>
+				<xsl:when test="$keyClass = $CS_EQUATION_BLOCK">
+					<xsl:sequence select="xs:integer(sum($numNodesInMap/@ds:equationCount))"/>
 				</xsl:when>
 				<xsl:otherwise>
 					<xsl:sequence select="0"/>
@@ -155,7 +182,10 @@
 		<xsl:variable name="fullNum" 	as="xs:integer" 	select="$precCount + $localNum"/>
 
 		<xsl:variable name="numStr" as="xs:string*">
-			<xsl:variable name="prefixFormat" as="xs:string" select="if ($keyClass = 'topic/fig') then $figurePrefix else $tablePrefix"/>
+			<xsl:variable name="prefixFormat" as="xs:string" 
+					select="if ($keyClass = $CS_FIG) then $figurePrefix 
+							else if ($keyClass = $CS_TABLE) then $tablePrefix 
+							else $equationPrefix"/>
 			<xsl:variable name="num" as="xs:string?">
 				<xsl:choose>
 					<xsl:when test="contains($numRootClass, $CLASS_FRONTMATTER)"/>
