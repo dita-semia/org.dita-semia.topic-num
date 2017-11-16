@@ -147,7 +147,11 @@
 	</xsl:template>
 	
 	
-	
+	<!-- 
+		Template: GetNumerableTitlePrefix
+		
+		returns the prefix for a tilte of an element with cross-topic numbering 
+	-->
 	<xsl:template name="GetNumerableTitlePrefix" as="node()?">
 		<xsl:param name="node"			as="element()?"	select="."/>
 		<xsl:param name="keyClass" 		as="xs:string"/>
@@ -155,12 +159,14 @@
 		
 		
 		<xsl:variable name="numRootNodeInMap" as="element()?">
+			<!-- The element within the root map that wraps the elements with same consecutive numbering (e.g. chapter) -->
 			<xsl:apply-templates select="$node" mode="GetNumRootNode"/>
 		</xsl:variable>
 		<xsl:variable name="numRootClass" 	as="xs:string?" select="$numRootNodeInMap/@class"/>
 		<xsl:variable name="topicInMap"		as="element()?"	select="key('map-uri', base-uri(.), $rootMap)[1]"/>
 
 		<xsl:variable name="precCount" 	as="xs:integer">
+			<!-- The number of numerable elements of the current type in preceding topics within the num-root -->
 			<xsl:variable name="numNodesInMap" as="element()*" select="($topicInMap/preceding::* | $topicInMap/ancestor::*) intersect $numRootNodeInMap/descendant-or-self::*"/>
 
 			<xsl:choose>
@@ -178,10 +184,18 @@
 				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
+		
 		<xsl:variable name="localNum" 	as="xs:integer" 	select="count(key('enumerableByClass', $keyClass, $node/ancestor::document-node())[. &lt;&lt; $node])"/>
+		<!-- the number within this topic -->
+		
 		<xsl:variable name="fullNum" 	as="xs:integer" 	select="$precCount + $localNum"/>
+		<!-- the actual number is simple the sum of preceding elements and the local number -->
 
 		<xsl:variable name="numStr" as="xs:string*">
+			<!-- 
+				Create the acutal string based on static prefix and the individual number.
+				The format of the numbering depends on the type of num-root element.
+			-->
 			<xsl:variable name="prefixFormat" as="xs:string" 
 					select="if ($keyClass = $CS_FIG) then $figurePrefix 
 							else if ($keyClass = $CS_TABLE) then $tablePrefix 

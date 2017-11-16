@@ -6,7 +6,13 @@
 	exclude-result-prefixes="#all">
 
 	
-	<!-- mode: GetNumRootNode -->
+	<!-- 
+		mode: GetNumRootNode 
+	
+		This mode returns a single node within the root map (passed as a tunnel parameter) that is the base element for cross-topic numbering.
+		Currently this either frontmatter, chapter, appendix or backmatter - if present - or the root document otherwise. 
+	
+	-->
 		
 	<xsl:template match="*[contains(@class, $CLASS_FRONTMATTER) or 
 							contains(@class, $CLASS_CHAPTER) or 

@@ -4,6 +4,20 @@
 	xmlns:xs	= "http://www.w3.org/2001/XMLSchema" 
 	xmlns:ds	= "http://www.dita-semia.org"
 	exclude-result-prefixes="#all">
+	
+	<!--
+
+		Architecture:
+		
+		The processing occurs in two steps:
+		1. Transform the root map file into a local variable:
+			- All references to sub maps are resolved inplace.
+			- To all references to topics the number of figures, tables and equation blocks within the referenced topic is added as attributes
+			  This is done so that the numbering of these elements per chapter can be done with good performance in the next step.
+		2. Process each each referenced topic and add the number pefix to the titles.
+		   The result is stored in a temporal file which will be renamed to the original lame by a following ant step.
+		
+	-->	
 
 	<xsl:param name="numDelimiter" 				as="xs:string" select="' '"/>
 	<xsl:param name="tmpUriSuffix" 				as="xs:string" select="'.tmp'"/>

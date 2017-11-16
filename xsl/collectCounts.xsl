@@ -16,6 +16,7 @@
 		<xsl:variable name="refUri" as="xs:anyURI" 			select="resolve-uri(@href, base-uri(.))"/>
 		<xsl:variable name="refDoc"	as="document-node()?"	select="if (doc-available($refUri)) then doc($refUri) else ()"/>
 		<xsl:copy>
+			<!-- Count the elements that need to be numbered cross-topic and add it as attributes to the topicref element. -->
 			<xsl:attribute name="ds:figCount" 		select="count(key('enumerableByClass', $CS_FIG, 			$refDoc))"/>
 			<xsl:attribute name="ds:tableCount" 	select="count(key('enumerableByClass', $CS_TABLE, 			$refDoc))"/>
 			<xsl:attribute name="ds:equationCount" 	select="count(key('enumerableByClass', $CS_EQUATION_BLOCK, 	$refDoc))"/>
@@ -25,6 +26,7 @@
 	
 	<xsl:template match="/*" mode="CollectCounts">
 		<xsl:copy>
+			<!-- add xml:base attribute so that base-uri() on the resulting resolved map returns the orginal url -->
 			<xsl:attribute name="xml:base" select="base-uri(.)"/>
 			<xsl:apply-templates select="attribute() | node()" mode="#current"/>
 		</xsl:copy>
