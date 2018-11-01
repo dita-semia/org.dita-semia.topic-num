@@ -15,18 +15,18 @@
 				<colspec colname="c2" colnum="2" colwidth="1.0*"/>
 				<thead>
 					<row>
-						<entry/>
-						<entry/>
+						<entry>Text Text Text</entry>
+						<entry>Text Text Text</entry>
 					</row>
 				</thead>
 				<tbody>
 					<row>
-						<entry/>
-						<entry/>
+						<entry>Text Text Text</entry>
+						<entry>Text Text Text</entry>
 					</row>
 					<row>
-						<entry/>
-						<entry/>
+						<entry>Text Text Text</entry>
+						<entry>Text Text Text</entry>
 					</row>
 				</tbody>
 			</tgroup>
@@ -47,18 +47,18 @@
 					<colspec colname="c2" colnum="2" colwidth="1.0*"/>
 					<thead>
 						<row>
-							<entry/>
-							<entry/>
+							<entry>Text Text Text</entry>
+							<entry>Text Text Text</entry>
 						</row>
 					</thead>
 					<tbody>
 						<row>
-							<entry/>
-							<entry/>
+							<entry>Text Text Text</entry>
+							<entry>Text Text Text</entry>
 						</row>
 						<row>
-							<entry/>
-							<entry/>
+							<entry>Text Text Text</entry>
+							<entry>Text Text Text</entry>
 						</row>
 					</tbody>
 				</tgroup>

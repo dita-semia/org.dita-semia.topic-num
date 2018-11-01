@@ -67,7 +67,6 @@
 	
 	<xsl:template name="place-tbl-lbl">
 		<xsl:param name="stringName"/>
-		
 		<!--<!-\- Number of table/title's before this one -\->
 		<xsl:variable name="tbl-count-actual" select="count(preceding::*[contains(@class, ' topic/table ')]/*[contains(@class, ' topic/title ')])+1"/>
 		
