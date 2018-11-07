@@ -43,6 +43,13 @@ to no more add additional prefixes. For demonstration purpose the file xsl/xhtml
 	This is not directly related to the numbering but easily integrated here and difficult to be realized in the output stage. 
 
 
+## Maintainance/Compatibility
+
+I'm using for our commercial publications. Thus, it is continiously maintained when . However, I'm not using github as main versioning system and will only occasionally this repository since I'm not aware of anybody else actually using it. So if you're interested in more frequent updates just let me know.
+
+Also note that I'm not doing any testing with different DITA-OT version. Currently I'm using DITA-OT 2.4 so this is the only version I'm sure it is compatible with. But I expect little to no modification sbeing required to make it work at least with newer versions.
+
+
 ## Parameters (ant properties):
 
 - **dita-semia.image-convert.activate**
