@@ -91,7 +91,7 @@
 		<!-- remove -->
 	</xsl:template>
 	
-	<xsl:template match="*[contains(@class, $CLASS_TOPICREF)][string(@href) != '']">
+	<xsl:template match="*[contains(@class, $CLASS_TOPICREF)][string(@href) != ''][@processing-role != 'resource-only']">
 		
 		<xsl:variable name="numRootNode"	as="node()?">
 			<xsl:apply-templates select="." mode="GetNumRootNode"/>

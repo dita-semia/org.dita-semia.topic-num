@@ -12,14 +12,21 @@
 		</xsl:copy>
 	</xsl:template>
 
-	<xsl:template match="*[contains(@class, $CLASS_TOPICREF)][string(@href) != '']" mode="CollectCounts">
+	<xsl:template match="*[contains(@class, $CLASS_TOPICREF)][string(@href) != ''][@processing-role != 'resource-only']" mode="CollectCounts">
 		<xsl:variable name="refUri" as="xs:anyURI" 			select="resolve-uri(@href, base-uri(.))"/>
 		<xsl:variable name="refDoc"	as="document-node()?"	select="if (doc-available($refUri)) then doc($refUri) else ()"/>
 		<xsl:copy>
-			<!-- Count the elements that need to be numbered cross-topic and add it as attributes to the topicref element. -->
-			<xsl:attribute name="ds:figCount" 		select="count(key('enumerableByClass', $CS_FIG, 			$refDoc))"/>
-			<xsl:attribute name="ds:tableCount" 	select="count(key('enumerableByClass', $CS_TABLE, 			$refDoc))"/>
-			<xsl:attribute name="ds:equationCount" 	select="count(key('enumerableByClass', $CS_EQUATION_BLOCK, 	$refDoc))"/>
+			<xsl:choose>
+				<xsl:when test="exists($refDoc)">
+					<!-- Count the elements that need to be numbered cross-topic and add it as attributes to the topicref element. -->
+					<xsl:attribute name="ds:figCount" 		select="count(key('enumerableByClass', $CS_FIG, 			$refDoc))"/>
+					<xsl:attribute name="ds:tableCount" 	select="count(key('enumerableByClass', $CS_TABLE, 			$refDoc))"/>
+					<xsl:attribute name="ds:equationCount" 	select="count(key('enumerableByClass', $CS_EQUATION_BLOCK, 	$refDoc))"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:message>WARNING: could not process referenced file '<xsl:value-of select="$refUri"/>'</xsl:message>
+				</xsl:otherwise>
+			</xsl:choose>
 			<xsl:apply-templates select="attribute() | node()" mode="#current"/>
 		</xsl:copy>
 	</xsl:template>

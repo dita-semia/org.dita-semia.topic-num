@@ -10,6 +10,36 @@
                         <scenarioAssociation-array>
                             <scenarioAssociation>
                                 <field name="url">
+                                    <String>../../docsrc/userguide-book.ditamap</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>DITA Map XHTML with topic numbers</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>DITAMAP</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../../docsrc/userguide.ditamap</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>DITA Map XHTML with topic numbers</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>DITAMAP</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
                                     <String>test/submap.ditamap</String>
                                 </field>
                                 <field name="scenarioIds">
@@ -1046,6 +1076,7 @@
     </meta>
     <projectTree name="dita-semia.topic-num.test.xpr">
         <folder name="DITA-OT base">
+            <folder path="../../docsrc/"/>
             <folder path="../../xsl/"/>
         </folder>
         <folder path="../org.dita-semia.image-convert/"/>
