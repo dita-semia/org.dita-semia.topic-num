@@ -36,8 +36,9 @@
 	<xsl:variable name="CLASS_TITLE"			as="xs:string"	select="' topic/title '"/>
 	<xsl:variable name="CLASS_EQUATION_BLOCK" 	as="xs:string" 	select="' equation-d/equation-block '"/>
 	<xsl:variable name="CLASS_EQUATION_NUMBER" 	as="xs:string" 	select="' equation-d/equation-number '"/>
-	
+
 	<xsl:variable name="CLASS_TOPICREF"			as="xs:string"	select="' map/topicref '"/>
+	<xsl:variable name="CLASS_RELTABLE"			as="xs:string"	select="' map/reltable '"/>
 	
 	<xsl:variable name="CLASS_FRONTMATTER"		as="xs:string"	select="' bookmap/frontmatter '"/>
 	<xsl:variable name="CLASS_CHAPTER"			as="xs:string"	select="' bookmap/chapter '"/>
@@ -91,7 +92,9 @@
 		<!-- remove -->
 	</xsl:template>
 	
-	<xsl:template match="*[contains(@class, $CLASS_TOPICREF)][string(@href) != ''][@processing-role != 'resource-only']">
+	
+	
+	<xsl:template match="*[contains(@class, $CLASS_TOPICREF)][ds:isTopicrefRelevant(.)]">
 		
 		<xsl:variable name="numRootNode"	as="node()?">
 			<xsl:apply-templates select="." mode="GetNumRootNode"/>
@@ -99,12 +102,17 @@
 		
 		<xsl:variable name="refUri" as="xs:anyURI" 			select="resolve-uri(@href, base-uri(.))"/>
 		<xsl:variable name="refDoc"	as="document-node()?"	select="if (doc-available($refUri)) then doc($refUri) else ()"/>
-		<xsl:if test="exists($refDoc)">
-			<xsl:message>processing topic <xsl:value-of select="$refUri"/></xsl:message>
-			<xsl:result-document href="{$refUri}{$tmpUriSuffix}" method="xml" indent="no">
-				<xsl:apply-templates select="$refDoc" mode="ProcessTopic"/>
-			</xsl:result-document>
-		</xsl:if>
+		<xsl:choose>
+			<xsl:when test="exists($refDoc)">
+				<xsl:message>processing topic <xsl:value-of select="$refUri"/></xsl:message>
+				<xsl:result-document href="{$refUri}{$tmpUriSuffix}" method="xml" indent="no">
+					<xsl:apply-templates select="$refDoc" mode="ProcessTopic"/>
+				</xsl:result-document>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:message>WARNING: could not process referenced file '<xsl:value-of select="$refUri"/>'</xsl:message>
+			</xsl:otherwise>
+		</xsl:choose>
 		
 		<xsl:next-match/>
 	</xsl:template>
@@ -127,5 +135,22 @@
 			<xsl:value-of select="."/>
 		</xsl:attribute>
 	</xsl:template>
+	
+	<xsl:function name="ds:isTopicrefRelevant" as="xs:boolean">
+		<xsl:param name="topicref" as="element()"/>
+		
+		<!-- 
+			ignore:
+				- not referencing anything
+				- processing-role "resource-only'
+				- html format
+				- references within reltable
+		-->
+		
+		<xsl:sequence select="(string($topicref/@href) != '') 
+				and not($topicref/@processing-role = 'resource-only') 
+				and not($topicref/@format = 'html')
+				and not($topicref/ancestor::*[contains(@class, $CLASS_RELTABLE)])"/>
+	</xsl:function>
 	
 </xsl:stylesheet>
