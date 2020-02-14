@@ -57,7 +57,7 @@
 	
 	
 	<xsl:key name="map-id" 		match="*[topicmeta/@resourceid]" 						use="topicmeta/@resourceid"/>
-	<xsl:key name="map-uri" 	match="*[contains(@class, ' map/topicref ')][@href]" 	use="resolve-uri(@href, base-uri(.))"/>
+	<xsl:key name="map-uri" 	match="*[contains(@class, ' map/topicref ')][@href]" 	use="resolve-uri(replace(@href, '#.*$', ''), base-uri(.))"/>
 	<xsl:key name="id" 			match="*[@id]"												use="@id"/>
 	
 	<xsl:key name="enumerableByClass" 
@@ -94,14 +94,20 @@
 	
 	
 	
-	<xsl:template match="*[contains(@class, $CLASS_TOPICREF)][ds:isTopicrefRelevant(.)]">
+	<xsl:template match="*[contains(@class, $CLASS_TOPICREF)][ds:isTopicrefRelevant(.)][not(ancestor::*/@chunk = 'to-content')]">
+		
+		<!-- don't process referenced topic when
+				- they are not relevant
+				- or they are sub-topics of a topic chunked to content (= sub-topics are embedded into same file) 
+		-->
 		
 		<xsl:variable name="numRootNode"	as="node()?">
 			<xsl:apply-templates select="." mode="GetNumRootNode"/>
 		</xsl:variable>
 		
-		<xsl:variable name="refUri" as="xs:anyURI" 			select="resolve-uri(@href, base-uri(.))"/>
-		<xsl:variable name="refDoc"	as="document-node()?"	select="if (doc-available($refUri)) then doc($refUri) else ()"/>
+		<xsl:variable name="hrefFile"	as="xs:string"			select="replace(@href, '#.*$', '')"/>	<!-- ignore id -->
+		<xsl:variable name="refUri" 	as="xs:anyURI" 			select="resolve-uri($hrefFile, base-uri(.))"/>
+		<xsl:variable name="refDoc"		as="document-node()?"	select="if (doc-available($refUri)) then doc($refUri) else ()"/>
 		<xsl:choose>
 			<xsl:when test="exists($refDoc)">
 				<xsl:message>processing topic <xsl:value-of select="$refUri"/></xsl:message>

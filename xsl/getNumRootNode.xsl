@@ -10,7 +10,7 @@
 		mode: GetNumRootNode 
 	
 		This mode returns a single node within the root map (passed as a tunnel parameter) that is the base element for cross-topic numbering.
-		Currently this either frontmatter, chapter, appendix or backmatter - if present - or the root document otherwise. 
+		Currently this is either frontmatter, chapter, appendix or backmatter - if present - or the root document otherwise. 
 	
 	-->
 		
@@ -25,8 +25,10 @@
 		<xsl:sequence select="."/>
 	</xsl:template>
 	
-	<xsl:template match="*[contains(@class, $CLASS_TOPIC)][empty(parent::*)]" mode="GetNumRootNode" as="node()?">
+	<xsl:template match="*[contains(@class, $CLASS_TOPIC)][empty(parent::*) or exists(parent::dita)]" mode="GetNumRootNode" as="node()?">
 		<xsl:param name="rootMap"		as="document-node()" 	tunnel="yes"/>
+		
+		<!-- for root elements or child-elements of a dita-element (generated for topics chunked "to-content") find the referencing element within the root map. -->
 		<xsl:apply-templates select="key('map-uri', base-uri(.), $rootMap)[1]" mode="#current"/>
 	</xsl:template>
 

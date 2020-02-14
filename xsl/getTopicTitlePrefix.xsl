@@ -14,7 +14,7 @@
 			<xsl:apply-templates select="." mode="GetNumRootNode"/>
 		</xsl:variable>
 		<xsl:variable name="numRootClass" as="xs:string?" select="$numRootNode/@class"/>
-		<!--<xsl:message>numRootClass(<xsl:value-of select="name(.)"/>): <xsl:value-of select="$numRootClass"/></xsl:message>-->
+		<!--<xsl:message>numRootClass(<xsl:value-of select="name(.)"/>, <xsl:value-of select="@id"/>): <xsl:value-of select="$numRootClass"/></xsl:message>-->
 			
 		<xsl:variable name="numLst" as="xs:integer*">
 			<xsl:apply-templates select="." mode="GetTopicNum"/>

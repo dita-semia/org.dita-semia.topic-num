@@ -10,6 +10,36 @@
                         <scenarioAssociation-array>
                             <scenarioAssociation>
                                 <field name="url">
+                                    <String>test/topic-num-test.ditamap</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>DITA Map XHTML with topic numbers</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>DITAMAP</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>test/submap.ditamap</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>DITA Map PDF with topic numbers</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>DITAMAP</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
                                     <String>../../docsrc/userguide.ditamap</String>
                                 </field>
                                 <field name="scenarioIds">
@@ -30,21 +60,6 @@
                                 <field name="scenarioIds">
                                     <list>
                                         <String>DITA Map XHTML with topic numbers</String>
-                                    </list>
-                                </field>
-                                <field name="scenarioTypes">
-                                    <list>
-                                        <String>DITAMAP</String>
-                                    </list>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="url">
-                                    <String>test/submap.ditamap</String>
-                                </field>
-                                <field name="scenarioIds">
-                                    <list>
-                                        <String>DITA Map PDF with topic numbers</String>
                                     </list>
                                 </field>
                                 <field name="scenarioTypes">
@@ -962,7 +977,7 @@
                         <scenarioAssociation-array>
                             <scenarioAssociation>
                                 <field name="url">
-                                    <String>xsl/processTopic.xsl</String>
+                                    <String>xsl/collectCounts.xsl</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
@@ -977,7 +992,7 @@
                             </scenarioAssociation>
                             <scenarioAssociation>
                                 <field name="url">
-                                    <String>xsl/collectCounts.xsl</String>
+                                    <String>xsl/processTopic.xsl</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
