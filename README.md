@@ -3,7 +3,7 @@ This DITA-OT plugin modifies title elements by adding a number to it.
 
 It's meant to be used for HTML-based output formats since in these transformation types (other than for PDF output) the topics are not merged into the dita map. Thus, it is difficult to do a cross-topic numbering in the output stage.
 
-Since after installation the step will be executed for every(!) transtype the feature has to activated explicitly by setting the parameter dita-semia.topic-num.activate to true.
+After installation the step will be executed for every(!) transtype. For this reason the feature has to be activated explicitly by setting the parameter dita-semia.topic-num.activate to true.
 
 Also note that your transformation type might already have its own implementation for adding a prefix to figure and table titles.
 For standard xhtml output this will result in titles like "Table 1. Table 1-1: Table-Title". To fix this you will have to modify the final transformation stage 
