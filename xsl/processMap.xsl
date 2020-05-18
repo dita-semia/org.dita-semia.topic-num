@@ -39,6 +39,8 @@
 
 	<xsl:variable name="CLASS_TOPICREF"			as="xs:string"	select="' map/topicref '"/>
 	<xsl:variable name="CLASS_RELTABLE"			as="xs:string"	select="' map/reltable '"/>
+
+	<xsl:variable name="CLASS_TOPICGROUP"		as="xs:string"	select="' mapgroup-d/topicgroup '"/>
 	
 	<xsl:variable name="CLASS_FRONTMATTER"		as="xs:string"	select="' bookmap/frontmatter '"/>
 	<xsl:variable name="CLASS_CHAPTER"			as="xs:string"	select="' bookmap/chapter '"/>
@@ -69,6 +71,7 @@
 
 	
 	<xsl:template match="/">
+		<!--<xsl:apply-templates select="//*[@href = 'group-child-D.dita']" mode="GetLocalTopicNum"/>-->
 		<xsl:variable name="mapWithCounts" as="document-node()">
 			<xsl:document>
 				<xsl:apply-templates select="node()" mode="CollectCounts"/>

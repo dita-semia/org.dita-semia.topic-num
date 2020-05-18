@@ -977,7 +977,7 @@
                         <scenarioAssociation-array>
                             <scenarioAssociation>
                                 <field name="url">
-                                    <String>xsl/collectCounts.xsl</String>
+                                    <String>xsl/getTopicTitlePrefix.xsl</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
@@ -992,7 +992,7 @@
                             </scenarioAssociation>
                             <scenarioAssociation>
                                 <field name="url">
-                                    <String>xsl/processTopic.xsl</String>
+                                    <String>xsl/collectCounts.xsl</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
@@ -1022,7 +1022,7 @@
                             </scenarioAssociation>
                             <scenarioAssociation>
                                 <field name="url">
-                                    <String>xsl/getTopicTitlePrefix.xsl</String>
+                                    <String>xsl/processTopic.xsl</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>

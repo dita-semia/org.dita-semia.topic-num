@@ -20,6 +20,29 @@
 	<chapter navtitle="3rd Chapter">
 		<mapref href="submap.ditamap"/>
 	</chapter>
+	<chapter navtitle="Group Test">
+		<keydef keys="key1"/>
+		<topicgroup>
+			<keydef keys="key2"/>
+			<topicref href="group-child-A.dita"/>
+			<topicgroup>
+				<keydef keys="key3"/>
+				<topicref href="group-child-B.dita"/>
+			</topicgroup>
+		</topicgroup>
+		<keydef keys="key4"/>
+		<topicref href="group-child-C.dita"/>
+		<topicgroup/>
+		<topicgroup>
+			<topicgroup/>
+			<topicgroup>
+				<topicref href="group-child-D.dita"/>
+				<keydef keys="key5"/>
+			</topicgroup>
+			<topicref href="group-child-E.dita"/>
+		</topicgroup>
+		<topicref href="group-child-F.dita"/>
+	</chapter>
 	<appendix href="appendix-topic-1.dita"/>
 	<appendix href="appendix-topic-2.dita">
 		<topicref href="appendix-child-topic-1.dita"/>

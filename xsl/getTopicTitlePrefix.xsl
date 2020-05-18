@@ -60,9 +60,22 @@
 		<xsl:sequence select="count(preceding-sibling::*[contains(@class, $CLASS_APPENDIX)]) + 1"/>
 	</xsl:template>
 	
+	<xsl:template match="*[contains(@class, $CLASS_TOPICGROUP)]" mode="GetTopicNum" as="xs:integer*" priority="4">
+		<!-- is handled in GetLocalTopicNum as well. At this place jst be transparent. -->
+		<xsl:apply-templates select="parent::*" mode="#current"/>
+	</xsl:template>
+	
+	<xsl:template match="*[contains(@class, $CLASS_TOPICREF)][@processing-role = 'resource-only']" mode="GetTopicNum" as="xs:integer?" priority="3">
+		<!-- has no toc entry -->
+	</xsl:template>
+	
+	<xsl:template match="*[contains(@class, $CLASS_TOPICREF)][@toc = 'no']" mode="GetTopicNum" as="xs:integer?" priority="2">
+		<!-- has no toc entry -->
+	</xsl:template>
+	
 	<xsl:template match="*[contains(@class, $CLASS_TOPICREF)]" mode="GetTopicNum" as="xs:integer*">
 		<xsl:apply-templates select="parent::*" mode="#current"/>
-		<xsl:sequence select="count(preceding-sibling::*[contains(@class, $CLASS_TOPICREF)]) + 1"/>
+		<xsl:apply-templates select="." mode="GetLocalTopicNum"/>
 	</xsl:template>
 	
 	<xsl:template match="*[contains(@class, $CLASS_TOPIC)][contains(parent::*/@class, $CLASS_TOPIC)]" mode="GetTopicNum" as="xs:integer*" priority="2">
@@ -84,9 +97,71 @@
 	<xsl:template match="node()" mode="GetTopicNum">
 		<!-- default: abort recursion -->
 	</xsl:template>
-		
 	
 	
+	
+	<!-- mode: GetLocalTopicNum -->
+	
+	<xsl:template match="*[contains(@class, $CLASS_TOPICREF)][@processing-role = 'resource-only']" mode="GetLocalTopicNum" as="xs:integer?" priority="4">
+		<!-- has no toc entry, so don't increment local topic number -->
+		<xsl:apply-templates select="." mode="GetPrecLocalTopicNum"/>
+	</xsl:template>
+	
+	<xsl:template match="*[contains(@class, $CLASS_TOPICREF)][@toc = 'no']" mode="GetLocalTopicNum" as="xs:integer?" priority="3">
+		<!-- has no toc entry, so don't increment local topic number -->
+		<xsl:apply-templates select="." mode="GetPrecLocalTopicNum"/>
+	</xsl:template>
+	
+	<xsl:template match="*[contains(@class, $CLASS_TOPICGROUP)]" mode="GetLocalTopicNum" as="xs:integer?" priority="2">
+		<!-- has no toc entry, so don't increment local topic number -->
+		<xsl:apply-templates select="." mode="GetPrecLocalTopicNum"/>
+	</xsl:template>
+
+	<xsl:template match="*[contains(@class, $CLASS_TOPICREF)]" mode="GetLocalTopicNum" as="xs:integer?">
+		<xsl:variable name="precNum" as="xs:integer?">
+			<xsl:apply-templates select="." mode="GetPrecLocalTopicNum"/>
+		</xsl:variable>
+		<xsl:sequence select="($precNum, 0)[1] + 1"/> <!-- increment previous topic number, starting with 1 -->
+	</xsl:template>
+	
+	<xsl:template match="node()" mode="GetLocalTopicNum">
+		<!-- default: no toc entry, so don't increment local topic number -->
+		<xsl:apply-templates select="." mode="GetPrecLocalTopicNum"/>
+	</xsl:template>
+	
+	
+	
+	<!-- mode: GetPrecLocalTopicNum -->
+	
+	<xsl:template match="*[contains(@class, $CLASS_TOPICGROUP)]/child::*[empty(preceding-sibling::*)]" mode="GetPrecLocalTopicNum" as="xs:integer?" priority="2">
+		<!-- 1st child of topic-group, so count preceeding topics of parent topic group -->
+		<xsl:apply-templates select="parent::*" mode="#current"/>
+	</xsl:template>
+	
+	<xsl:template match="*[preceding-sibling::*[1][contains(@class, $CLASS_TOPICGROUP)][exists(*)]]" mode="GetPrecLocalTopicNum" as="xs:integer?" priority="2">
+		<xsl:apply-templates select="preceding-sibling::*[1]" mode="GetLastDescLocalTopicNum"/>
+	</xsl:template>
+	
+	<xsl:template match="node()" mode="GetPrecLocalTopicNum">
+		<!-- default: get topic number of preceding sibling -->
+		<xsl:apply-templates select="preceding-sibling::*[1]" mode="GetLocalTopicNum"/>
+	</xsl:template>
+
+
+
+	<!-- mode: GetLastDescLocalTopicNum -->
+	
+	<xsl:template match="*[contains(child::*[last()]/@class, $CLASS_TOPICGROUP)]" mode="GetLastDescLocalTopicNum" as="xs:integer?" priority="2">
+		<!-- recurse -->
+		<xsl:apply-templates select="child::*[last()]" mode="#current"/>
+	</xsl:template>
+	
+	<xsl:template match="node()" mode="GetLastDescLocalTopicNum">
+		<!-- default: get topic number of last child -->
+		<xsl:apply-templates select="child::*[last()]" mode="GetLocalTopicNum"/>
+	</xsl:template>
+	
+
 	<!-- utility functions -->
 	
 	<xsl:function name="ds:getNumPrefix" as="node()?">
