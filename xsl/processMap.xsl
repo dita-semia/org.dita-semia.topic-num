@@ -37,6 +37,7 @@
 	<xsl:variable name="CLASS_EQUATION_BLOCK" 	as="xs:string" 	select="' equation-d/equation-block '"/>
 	<xsl:variable name="CLASS_EQUATION_NUMBER" 	as="xs:string" 	select="' equation-d/equation-number '"/>
 
+	<xsl:variable name="CLASS_MAP"				as="xs:string"	select="' map/map '"/>
 	<xsl:variable name="CLASS_TOPICREF"			as="xs:string"	select="' map/topicref '"/>
 	<xsl:variable name="CLASS_RELTABLE"			as="xs:string"	select="' map/reltable '"/>
 

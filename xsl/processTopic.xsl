@@ -210,7 +210,7 @@
 						</xsl:variable>
 						<xsl:number value="($rootNum, $fullNum)" format="A-1"/>
 					</xsl:when>
-					<xsl:when test="contains($numRootClass, $CLASS_CHAPTER)">
+					<xsl:when test="contains($numRootClass, $CLASS_CHAPTER) or contains($numRootClass, $CLASS_TOPICREF)">
 						<xsl:variable name="rootNum" as="xs:integer">
 							<xsl:apply-templates select="$numRootNodeInMap" mode="GetTopicNum"/>
 						</xsl:variable>

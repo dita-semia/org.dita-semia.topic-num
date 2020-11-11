@@ -10,14 +10,19 @@
 		mode: GetNumRootNode 
 	
 		This mode returns a single node within the root map (passed as a tunnel parameter) that is the base element for cross-topic numbering.
-		Currently this is either frontmatter, chapter, appendix or backmatter - if present - or the root document otherwise. 
-	
+		Currently this is either frontmatter, chapter, appendix or backmatter - if present - or the root document otherwise.
+		If the root element is a map (not a bookmap) the root topic is taken as root node to get the same behavior as with chapters.
+
 	-->
 		
 	<xsl:template match="*[contains(@class, $CLASS_FRONTMATTER) or 
 							contains(@class, $CLASS_CHAPTER) or 
 							contains(@class, $CLASS_APPENDIX) or 
 							contains(@class, $CLASS_BACKMATTER)]" mode="GetNumRootNode" as="node()?" priority="2">
+		<xsl:sequence select="."/>
+	</xsl:template>
+	
+	<xsl:template match="*[contains(@class, $CLASS_MAP)]/*[contains(@class, $CLASS_TOPICREF)]" mode="GetNumRootNode" as="node()?" priority="2">
 		<xsl:sequence select="."/>
 	</xsl:template>
 	

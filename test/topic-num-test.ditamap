@@ -30,9 +30,10 @@
 				<topicref href="group-child-B.dita"/>
 			</topicgroup>
 		</topicgroup>
-		<keydef keys="key4"/>
 		<topicref href="group-child-C.dita"/>
-		<topicgroup/>
+		<topicgroup>
+			<keydef keys="key4"/>
+		</topicgroup>
 		<topicgroup>
 			<topicgroup/>
 			<topicgroup>
