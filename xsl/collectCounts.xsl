@@ -13,7 +13,7 @@
 	</xsl:template>
 
 	<xsl:template match="*[contains(@class, $CLASS_TOPICREF)][ds:isTopicrefRelevant(.)]" mode="CollectCounts">
-		<xsl:variable name="refUri" as="xs:anyURI" 			select="resolve-uri(@href, base-uri(.))"/>
+		<xsl:variable name="refUri" as="xs:anyURI" 			select="if (@href) then resolve-uri(@href, base-uri(.)) else(resolve-uri('', base-uri(.)))"/>
 		<xsl:variable name="refDoc"	as="document-node()?"	select="if (doc-available($refUri)) then doc($refUri) else ()"/>
 		<xsl:copy>
 			<xsl:if test="exists($refDoc)">

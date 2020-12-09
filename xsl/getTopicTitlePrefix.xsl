@@ -55,6 +55,10 @@
 	<xsl:template match="*[contains(@class, $CLASS_CHAPTER)]" mode="GetTopicNum" as="xs:integer*" priority="2">
 		<xsl:sequence select="count(preceding-sibling::*[contains(@class, $CLASS_CHAPTER)]) + 1"/>
 	</xsl:template>
+	
+	<xsl:template match="*[contains(@class, $CLASS_TOPICHEAD)]" mode="GetTopicNum" as="xs:integer*" priority="2">
+		<xsl:sequence select="count(preceding-sibling::*[contains(@class, $CLASS_TOPICREF)][not(@processing-role = 'resource-only' or @toc = 'no')]) + 1"/>
+	</xsl:template>
 
 	<xsl:template match="*[contains(@class, $CLASS_APPENDIX)]" mode="GetTopicNum" as="xs:integer*" priority="2">
 		<xsl:sequence select="count(preceding-sibling::*[contains(@class, $CLASS_APPENDIX)]) + 1"/>

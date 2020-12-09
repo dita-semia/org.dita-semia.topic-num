@@ -4,7 +4,9 @@
 	<topicref href="map-child-topic-1.dita">
 		<topicref href="map-grandchild-topic-1.dita"/>
 	</topicref>
-	<topicref href="map-child-topic-2.dita"/>
+	<topichead navtitle="An additional nesting level">
+		<topicref href="map-child-topic-2.dita"/>
+	</topichead>
 </map>
     
     
