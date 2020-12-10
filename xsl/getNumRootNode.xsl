@@ -18,7 +18,7 @@
 	<xsl:template match="*[contains(@class, $CLASS_FRONTMATTER) or 
 							contains(@class, $CLASS_CHAPTER) or 
 							contains(@class, $CLASS_APPENDIX) or 
-							contains(@class, $CLASS_BACKMATTER)]" mode="GetNumRootNode" as="node()?" priority="2">
+							contains(@class, $CLASS_BACKMATTER)]" mode="GetNumRootNode" as="node()?" priority="3">
 		<xsl:sequence select="."/>
 	</xsl:template>
 	
