@@ -40,7 +40,18 @@
 					<xsl:sequence select="replace($chapterPrefixFormat, '\$', $num)"/>
 				</xsl:when>
 				<xsl:otherwise>
-					<xsl:number value="$numLst" format="1.1"/>
+					<xsl:choose>
+						<xsl:when test="parent::*[@class=$CLASS_MAP]">
+							<xsl:variable name="num" as="xs:string?">
+								<xsl:number value="$numLst" format="1.1"/>
+							</xsl:variable>
+							<xsl:sequence select="concat($num, '.')"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:number value="$numLst" format="1.1"/>	
+						</xsl:otherwise>
+						
+					</xsl:choose>
 				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
@@ -56,8 +67,9 @@
 		<xsl:sequence select="count(preceding-sibling::*[contains(@class, $CLASS_CHAPTER)]) + 1"/>
 	</xsl:template>
 	
-	<xsl:template match="*[contains(@class, $CLASS_TOPICHEAD)]" mode="GetTopicNum" as="xs:integer*" priority="2">
-		<xsl:sequence select="count(preceding-sibling::*[contains(@class, $CLASS_TOPICREF)][not(@processing-role = 'resource-only' or @toc = 'no')]) + 1"/>
+	<xsl:template match="*[contains(@class, $CLASS_TOPICHEAD)]" mode="GetTopicNum" as="xs:integer*" priority="4">
+		<xsl:apply-templates select="parent::*" mode="#current"/>
+		<xsl:apply-templates select="." mode="GetLocalTopicNum"/>
 	</xsl:template>
 
 	<xsl:template match="*[contains(@class, $CLASS_APPENDIX)]" mode="GetTopicNum" as="xs:integer*" priority="2">
