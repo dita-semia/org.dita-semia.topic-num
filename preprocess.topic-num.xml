@@ -51,10 +51,18 @@
 				</if>
 				<if>
 					<not>
+						<isset property="dita-semia.topic-num.root-topic-prefix-format"/>
+					</not>
+					<then>
+						<property name="dita-semia.topic-num.root-topic-prefix-format" value="$."/>
+					</then>
+				</if>
+				<if>
+					<not>
 						<isset property="dita-semia.topic-num.figure-prefix"/>
 					</not>
 					<then>
-						<property name="dita-semia.topic-num.figure-prefix" value="Figure $: "/>
+						<property name="dita-semia.topic-num.figure-prefix" value="Figure $:"/>
 					</then>
 				</if>
 				<if>
@@ -62,7 +70,7 @@
 						<isset property="dita-semia.topic-num.table-prefix"/>
 					</not>
 					<then>
-						<property name="dita-semia.topic-num.table-prefix" value="Table $: "/>
+						<property name="dita-semia.topic-num.table-prefix" value="Table $:"/>
 					</then>
 				</if>
 				<if>
@@ -70,7 +78,7 @@
 						<isset property="dita-semia.topic-num.equation-prefix"/>
 					</not>
 					<then>
-						<property name="dita-semia.topic-num.equation-prefix" value="Equation $: "/>
+						<property name="dita-semia.topic-num.equation-prefix" value="Equation $:"/>
 					</then>
 				</if>
 				
@@ -81,6 +89,7 @@
 						<echo message="  dita-semia.topic-num.num-delimiterl:         	'${dita-semia.topic-num.num-delimiter}'"/>
 						<echo message="  dita-semia.topic-num.chapter-prefix-format:  	'${dita-semia.topic-num.chapter-prefix-format}'"/>
 						<echo message="  dita-semia.topic-num.appendix-prefix-format: 	'${dita-semia.topic-num.appendix-prefix-format}'"/>
+						<echo message="  dita-semia.topic-num.root-topic-prefix-format: '${dita-semia.topic-num.root-topic-prefix-format}'"/>
 						<echo message="  dita-semia.topic-num.figure-prefix: 			'${dita-semia.topic-num.figure-prefix}'"/>
 						<echo message="  dita-semia.topic-num.table-prefix: 			'${dita-semia.topic-num.table-prefix}'"/>
 						<echo message="  dita-semia.topic-num.equation-prefix: 			'${dita-semia.topic-num.equation-prefix}'"/>
@@ -99,6 +108,7 @@
 					<param name="tmpUriSuffix" 			expression="${dita-semia.topic-num.tmp-uri-suffix}"/>
 					<param name="chapterPrefixFormat" 	expression="${dita-semia.topic-num.chapter-prefix-format}"/>
 					<param name="appendixPrefixFormat" 	expression="${dita-semia.topic-num.appendix-prefix-format}"/>
+					<param name="rootTopicPrefixFormat" expression="${dita-semia.topic-num.root-topic-prefix-format}"/>
 					<param name="figurePrefix" 			expression="${dita-semia.topic-num.figure-prefix}"/>
 					<param name="tablePrefix" 			expression="${dita-semia.topic-num.table-prefix}"/>
 					<param name="equationPrefix" 		expression="${dita-semia.topic-num.equation-prefix}"/>

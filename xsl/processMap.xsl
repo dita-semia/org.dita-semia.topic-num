@@ -23,9 +23,10 @@
 	<xsl:param name="tmpUriSuffix" 				as="xs:string" select="'.tmp'"/>
 	<xsl:param name="chapterPrefixFormat" 		as="xs:string" select="'Chapter $:'"/>
 	<xsl:param name="appendixPrefixFormat" 		as="xs:string" select="'Appendix $:'"/>
+	<xsl:param name="rootTopicPrefixFormat" 	as="xs:string" select="'$.'"/>
 	<xsl:param name="figurePrefix" 				as="xs:string" select="'Figure $:'"/>
 	<xsl:param name="tablePrefix" 				as="xs:string" select="'Table $:'"/>
-	<xsl:param name="equationPrefix" 			as="xs:string" select="'Equation $: '"/>
+	<xsl:param name="equationPrefix" 			as="xs:string" select="'Equation $:'"/>
 
 
 	<xsl:variable name="CLASS_TOPIC"			as="xs:string"	select="' topic/topic '"/>

@@ -39,19 +39,14 @@
 					</xsl:variable>
 					<xsl:sequence select="replace($chapterPrefixFormat, '\$', $num)"/>
 				</xsl:when>
+				<xsl:when test="contains($numRootClass, $CLASS_TOPICREF) and (count($numLst) = 1) and ($rootTopicPrefixFormat != '')">
+					<xsl:variable name="num" as="xs:string?">
+						<xsl:number value="$numLst" format="1"/>
+					</xsl:variable>
+					<xsl:sequence select="replace($rootTopicPrefixFormat, '\$', $num)"/>
+				</xsl:when>
 				<xsl:otherwise>
-					<xsl:choose>
-						<xsl:when test="parent::*[@class=$CLASS_MAP]">
-							<xsl:variable name="num" as="xs:string?">
-								<xsl:number value="$numLst" format="1.1"/>
-							</xsl:variable>
-							<xsl:sequence select="concat($num, '.')"/>
-						</xsl:when>
-						<xsl:otherwise>
-							<xsl:number value="$numLst" format="1.1"/>	
-						</xsl:otherwise>
-						
-					</xsl:choose>
+					<xsl:number value="$numLst" format="1.1"/>	
 				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
