@@ -34,7 +34,7 @@
 		<xsl:param name="rootMap"		as="document-node()" 	tunnel="yes"/>
 		
 		<!-- for root elements or child-elements of a dita-element (generated for topics chunked "to-content") find the referencing element within the root map. -->
-		<xsl:apply-templates select="key('map-uri', base-uri(.), $rootMap)[1]" mode="#current"/>
+		<xsl:apply-templates select="ds:getTopicInMapByUri(base-uri(.), $rootMap)" mode="#current"/>
 	</xsl:template>
 
 	<xsl:template match="*" mode="GetNumRootNode" as="node()?">

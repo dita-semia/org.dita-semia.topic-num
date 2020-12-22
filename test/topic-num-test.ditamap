@@ -11,6 +11,7 @@
 			<figurelist/>
 			<tablelist/>
 		</booklists>
+		<keydef keys="appendix-child-topic-1" href="appendix-child-topic-1.dita"/>
 	</frontmatter>
 	<chapter href="chapter-topic-1.dita"/>
 	<chapter href="chapter-topic-2.dita">
@@ -46,7 +47,7 @@
 	</chapter>
 	<appendix href="appendix-topic-1.dita"/>
 	<appendix href="appendix-topic-2.dita">
-		<topicref href="appendix-child-topic-1.dita"/>
+		<topicref keyref="appendix-child-topic-1"/>
 		<topicref href="appendix-child-topic-2.dita"/>
 	</appendix>
 	<backmatter>

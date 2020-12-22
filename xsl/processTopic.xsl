@@ -31,7 +31,7 @@
 			<xsl:apply-templates select="attribute()" mode="#current"/>
 			
 			<xsl:variable name="uri" as="xs:string?" select="string(resolve-uri(parent::*/@href, base-uri(.)))"/>
-			<xsl:apply-templates select="key('map-uri', $uri, $rootMap)[1]" mode="GetTopicTitlePrefix"/>
+			<xsl:apply-templates select="ds:getTopicInMapByUri($uri, $rootMap)" mode="GetTopicTitlePrefix"/>
 			
 			<xsl:apply-templates select="node()" mode="#current"/>
 		</xsl:copy>
@@ -79,7 +79,7 @@
 		
 		<!--<xsl:message>xref-uri: <xsl:value-of select="$uri"/></xsl:message>-->
 		<!--<xsl:message>
-			<xsl:apply-templates select="key('map-uri', $uri, $rootMap)[1]" mode="GetTopicTitlePrefix"/>	
+			<xsl:apply-templates select="ds:getTopicInMapByUri($uri, $rootMap)" mode="GetTopicTitlePrefix"/>	
 		</xsl:message>-->
 	</xsl:template>
 	
@@ -221,7 +221,9 @@
 					</xsl:otherwise>
 				</xsl:choose>
 			</xsl:variable>
-			<xsl:sequence select="replace($prefixFormat, '\$', $num)"/>
+			<xsl:if test="$num">
+				<xsl:sequence select="replace($prefixFormat, '\$', $num)"/>
+			</xsl:if>
 		</xsl:variable>
 		
 		<!--<xsl:message select="$numRootClass"/>

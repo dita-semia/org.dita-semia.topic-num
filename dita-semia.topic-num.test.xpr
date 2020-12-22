@@ -10,6 +10,21 @@
                         <scenarioAssociation-array>
                             <scenarioAssociation>
                                 <field name="url">
+                                    <String>file:/C:/TEMP/topic-num-test/fkh1603908388334.ditamap</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>DITA Map XHTML with topic numbers</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>DITAMAP</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
                                     <String>test/submap.ditamap</String>
                                 </field>
                                 <field name="scenarioIds">
@@ -977,22 +992,7 @@
                         <scenarioAssociation-array>
                             <scenarioAssociation>
                                 <field name="url">
-                                    <String>xsl/getTopicTitlePrefix.xsl</String>
-                                </field>
-                                <field name="scenarioIds">
-                                    <list>
-                                        <String>processMap.xsl</String>
-                                    </list>
-                                </field>
-                                <field name="scenarioTypes">
-                                    <list>
-                                        <String>Validation_scenario</String>
-                                    </list>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="url">
-                                    <String>xsl/collectCounts.xsl</String>
+                                    <String>xsl/processTopic.xsl</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
@@ -1022,7 +1022,22 @@
                             </scenarioAssociation>
                             <scenarioAssociation>
                                 <field name="url">
-                                    <String>xsl/processTopic.xsl</String>
+                                    <String>xsl/getTopicTitlePrefix.xsl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>processMap.xsl</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>Validation_scenario</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>xsl/collectCounts.xsl</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>

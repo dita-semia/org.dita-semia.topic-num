@@ -63,7 +63,8 @@
 	
 	<xsl:key name="map-id" 		match="*[topicmeta/@resourceid]" 						use="topicmeta/@resourceid"/>
 	<xsl:key name="map-uri" 	match="*[contains(@class, ' map/topicref ')][@href]" 	use="resolve-uri(replace(@href, '#.*$', ''), base-uri(.))"/>
-	<xsl:key name="id" 			match="*[@id]"												use="@id"/>
+	<xsl:key name="map-key" 	match="*[contains(@class, ' map/topicref ')][@keyref]" 	use="@keyref"/>
+	<xsl:key name="id" 			match="*[@id]"											use="@id"/>
 	
 	<xsl:key name="enumerableByClass" 
 		match	= "*[contains(@class, $CLASS_FIG)][*[contains(@class, $CLASS_TITLE)]] | 
@@ -163,6 +164,28 @@
 				and not($topicref/@processing-role = 'resource-only') 
 				and not($topicref/@format = 'html')
 				and not($topicref/ancestor::*[contains(@class, $CLASS_RELTABLE)])"/>
+	</xsl:function>
+	
+	
+	<xsl:function name="ds:getTopicInMapByUri" as="element()?">
+		<xsl:param name="uri" 		as="xs:string?"/>
+		<xsl:param name="rootMap"	as="document-node()"/>
+		
+		<xsl:sequence select="ds:getTopicInMapByKey(key('map-uri', $uri, $rootMap)[1], $rootMap)"/>
+	</xsl:function>
+	
+	<xsl:function name="ds:getTopicInMapByKey" as="element()?">
+		<xsl:param name="topic" 	as="element()?"/>
+		<xsl:param name="rootMap"	as="document-node()"/>
+		
+		<xsl:choose>
+			<xsl:when test="$topic/@keys">
+				<xsl:sequence select="ds:getTopicInMapByKey(key('map-key', $topic/@keys, $rootMap)[1], $rootMap)"/>		
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:sequence select="$topic"/>
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:function>
 	
 </xsl:stylesheet>

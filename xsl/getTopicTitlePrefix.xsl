@@ -96,13 +96,13 @@
 	
 	<xsl:template match="*[contains(@class, $CLASS_TOPIC)]" mode="GetTopicNum" as="xs:integer*">
 		<xsl:param name="rootMap" as="document-node()" tunnel="yes"/>
-		<xsl:apply-templates select="key('map-uri', base-uri(.), $rootMap)[1]" mode="#current"/>
+		<xsl:apply-templates select="ds:getTopicInMapByUri(base-uri(.), $rootMap)" mode="#current"/>
 	</xsl:template>
 	
 	<xsl:template match="*[contains(@class, $CLASS_LINK)]" mode="GetTopicNum" as="xs:integer*">
 		<xsl:param name="rootMap" as="document-node()" tunnel="yes"/>
 		<xsl:variable name="refUri" 	as="xs:string?"	select="string(resolve-uri(parent::*/@href, base-uri(.)))"/>
-		<xsl:apply-templates select="key('map-uri', $refUri, $rootMap)[1]" mode="#current"/>
+		<xsl:apply-templates select="ds:getTopicInMapByUri($refUri, $rootMap)" mode="#current"/>
 	</xsl:template>
 	
 	<xsl:template match="node()" mode="GetTopicNum">
